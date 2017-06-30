@@ -18,7 +18,7 @@ to your composer.json, and then you can simply install with:
 
 composer install
 
-## more informnation
+## more information
 
 See the [project wiki](https://github.com/rstoetter/csmartsqlstatement-php/wiki) for more information.
 
