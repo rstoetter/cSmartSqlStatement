@@ -1,5 +1,5 @@
 {
-    "name": "rstoetter/cSmartSqlStatement",
+    "name": "rstoetter/csmartsqlstatement-php",
     "description": "class to manage SQL statements ",
     "license": "MIT",
     "keywords": ["php", "sql","sql statement"],
