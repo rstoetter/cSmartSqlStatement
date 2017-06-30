@@ -1,0 +1,23 @@
+{
+    "name": "rstoetter/cSmartSqlStatement",
+    "description": "class to manage SQL statements ",
+    "license": "MIT",
+    "keywords": ["php", "sql","sql statement"],
+    "authors": [
+        {
+            "name": "Rainer Stötter",
+            "email": "rstoetter@users.sourceforge.net"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+        
+    },
+    "autoload": {
+        "psr-4": {
+            "rstoetter\\libsqlphp\\": "src"
+        }
+    }
+}
