@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-
+        "rstoetter/libsqlphp": ">=1.0.0"
     },
     "require-dev": {
         

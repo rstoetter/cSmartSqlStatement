@@ -2516,7 +2516,7 @@ TODO: allow dollar sign in table names
 
             $start_statement = '';
             // echo '<br><h3>Scanne Special Start Items</h3>';
-            while ( cMysql57_Utils::IsStartStatement( $id = $this->ScanIdentifier( ) ) ) {
+            while ( \rstoetter\libsqlphp\cMySql57_Utils::IsStartStatement( $id = $this->ScanIdentifier( ) ) ) {
 
         // 		  $this->ScanIdentifier( );
 
