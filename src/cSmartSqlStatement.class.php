@@ -161,6 +161,14 @@ cSmartSqlStatement:: (108 methods):
 class cSmartSqlStatement {
 
 	// Deklarationen für ScanStatement( )
+	
+	/**
+	 * the part of the select statement between select and field list
+	 *
+	 * @var string
+	 */
+
+	public $m_extra = '';		// Extra-Anteil zwischen Select und Feldliste	
 
     /**
       *
@@ -2083,7 +2091,7 @@ TODO: allow dollar sign in table names
 	      if ( $remove_AS ) {
             for ( $i = 0; $i < count( $ary_table_names ); $i++ ) {
 
-                $ary_table_names[ $i ] = $this->RemoveAlias( $ary_table_names[ $i ] );
+                $ary_table_names[ $i ] = \rstoetter\cSQL\cSQL::RemoveAlias( $ary_table_names[ $i ] );
 
             }
 	      }
@@ -2465,6 +2473,18 @@ TODO: allow dollar sign in table names
 
     }	// function GetStatementHTML( )
     
+	/**
+	 * The method SetExtra( ) sets the extra part beween SELECT and the field list
+	 *
+	 * @param string the extra part of the query
+	 *
+	 */
+
+
+	public function SetExtra( $extra ) {
+		$this->m_extra = $extra;
+	}    
+    
     /**
       *
       * The method ScanStatement( ) scans the statement $sql_statement
@@ -2773,14 +2793,14 @@ TODO: allow dollar sign in table names
 
             // echo "<br> ary_fields in ScanStatement: " ; print_r( $ary_fields );
 
-            $this->ResetColumns( );
+// ???            $this->ResetColumns( );
 
             for ( $i = 0; $i < count( $ary_fields ); $i++ ) {
 
-            assert ( $ary_fields[ 0 ]  != 'SELECT' );
-            assert( ! is_null( $ary_fields[ $i ] ) );
-            assert ( ( strlen( trim( $ary_fields[ $i ] ) ) ) );
-            $this->AddColumn( $ary_fields[$i] );
+                assert ( $ary_fields[ 0 ]  != 'SELECT' );
+                assert( ! is_null( $ary_fields[ $i ] ) );
+                assert ( ( strlen( trim( $ary_fields[ $i ] ) ) ) );
+//???                $this->AddColumn( $ary_fields[$i] );
 
             }
 

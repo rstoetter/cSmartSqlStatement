@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "rstoetter/libsqlphp": ">=1.0.0"
+        "rstoetter/libsqlphp": ">=1.0.0",
+        "rstoetter/cSQL": ">=1.0.0"
     },
     "require-dev": {
         
