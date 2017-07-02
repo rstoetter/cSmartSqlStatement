@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "rstoetter\\csmartsqlstatement-php\\": "src/"
+            "rstoetter\\cSmartSqlStatement\\": "src/"
         }
     }
 }
