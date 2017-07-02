@@ -1,6 +1,6 @@
 {
     "name": "rstoetter/csmartsqlstatement-php",
-    "description": "class to manage SQL statements ",
+    "description": "class to manage SQL SELECT statements - analyze and replace clauses",
     "license": "MIT",
     "keywords": ["php", "sql","sql statement"],
     "authors": [
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "rstoetter\\csmartsqlstatement-php\\": "src"
+            "rstoetter\\csmartsqlstatement-php\\": "src/"
         }
     }
 }
