@@ -2164,7 +2164,7 @@ TODO: allow dollar sign in table names
 	      $ary_table_names = explode( ',',  $this->GetTableNameClause( ) );
 
 	      for ( $i = 0; $i < count( $ary_table_names ); $i++ ) {
-		  $ary_table_names[ $i ] = $this->GetAliasFromTablename( $ary_table_names[ $i ] );
+		  $ary_table_names[ $i ] = \rstoetter\cSQL\cSQL::GetAliasFromTablename( $ary_table_names[ $i ] );
 	      }
 
 
