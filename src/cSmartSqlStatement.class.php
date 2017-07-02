@@ -2088,6 +2088,7 @@ TODO: allow dollar sign in table names
 	      }
 
 	      // AS-Ersetzungen entfernen
+	      //
 	      if ( $remove_AS ) {
             for ( $i = 0; $i < count( $ary_table_names ); $i++ ) {
 
