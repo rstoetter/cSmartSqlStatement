@@ -2620,9 +2620,9 @@ TODO: allow dollar sign in table names
             $pos_act_token = $this->m_char_index;
             $identifier = $this->ScanTableOrFieldName( );
             $identifier = strtoupper( $identifier );
-            assert( ( $this->m_chr == '' ) || ( cMysql57_Utils::IsClauseStart( strtoupper( $identifier ) ) ) || ( $this->m_chr == ';' ) );
+            assert( ( $this->m_chr == '' ) || ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $identifier ) ) ) || ( $this->m_chr == ';' ) );
 
-            if ( ! ( ( $this->m_chr == '' ) || ( cMysql57_Utils::IsClauseStart( strtoupper( $identifier ) ) ) || ( $this->m_chr == ';' ) ) ) {
+            if ( ! ( ( $this->m_chr == '' ) || ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $identifier ) ) ) || ( $this->m_chr == ';' ) ) ) {
 
                 echo "<br> Ende oder ClauseStart:m_chr = $this->m_chr";
                 $this->DumpState( );
@@ -4057,10 +4057,10 @@ B'01'
 
 	      //  echo "<br> ScanConditionalExpression( ) mit Token '$token' und m_chr = $this->m_chr";
 
-	      if ( ( ( cMysql57_Utils::IsClauseStart( $token ) ) ||  ( cMysql57_Utils::IsJoinSyntax( $token ) ) ) &&
-	           ( ! cMysql57_Utils::IsIndexHintStart( $token ) ) ){
+	      if ( ( ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $token ) ) ||  ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinSyntax( $token ) ) ) &&
+	           ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsIndexHintStart( $token ) ) ){
 
-		  if ( cMysql57_Utils::IsJoinSyntax( $token ) ) {
+		  if ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinSyntax( $token ) ) {
 
 			// echo "<br> Join detected in '$token'";
 
@@ -4741,7 +4741,7 @@ B'01'
 		  $factor .= $identifier;
 	      }
 */
-	      if ( cMysql57_Utils::IsJoinStart( $id_next) ) {
+	      if ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( $id_next) ) {
 
 // 		  $this->RewindTo( $pos_start );
 
@@ -4811,9 +4811,9 @@ B'01'
 
 
             } elseif (
-                ( ! cMysql57_Utils::IsClauseStart( $id_next ) ) &&
-                ( ! cMysql57_Utils::IsJoinStart( $id_next ) )  &&
-                ( ! cMysql57_Utils::IsJoinSyntax( $id_next ) ) ){
+                ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $id_next ) ) &&
+                ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( $id_next ) )  &&
+                ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinSyntax( $id_next ) ) ){
 
             $ret .= ' AS ';
 
@@ -4889,7 +4889,7 @@ B'01'
 
             $last_id = $id;
             $id = $this->ScanIdentifier( true );
-            if ( cMysql57_Utils::IsClauseStart( $id ) ) {
+            if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $id ) ) {
 
                 $fertig = true;
                 for ( $i = 0; $i < strlen( $id ); $i++ ) { $this->UnGetCh( ); }
@@ -4903,12 +4903,12 @@ B'01'
 
                 $id = trim( $id );
 
-                if ( cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
+                if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
                 $fertig = true;
                 }
 
 
-                if ( cMysql57_Utils::IsClauseStart( $id ) ) {
+                if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $id ) ) {
                 for ( $i = 0; $i < strlen( $id ); $i ++ ) $this->UnGetCh( );
                 $fertig = true;
 
@@ -5080,7 +5080,7 @@ B'01'
                     $this->SkipSpaces( );
                     $id = $this->ScanIdentifier( );
 
-                    if ( ( ! cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) && ( ! cMysql57_Utils::IsJoinStart( strtoupper( $id ) ) ) ) {
+                    if ( ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) && ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $id ) ) ) ) {
                         $this->SkipSpaces( );
                         $condition = $this->ScanJoinCondition( $id );
 
@@ -5134,7 +5134,7 @@ B'01'
                     $last_id = $id;
                     $id = $this->ScanIndexHintList( $id );
 
-                } elseif ( cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
+                } elseif ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
 
                     $fertig = true;
                     for ( $i = 0; $i < strlen( $id ); $i++ ) { $this->UnGetCh( ); }
@@ -5144,7 +5144,7 @@ B'01'
                 $this->SkipSpaces( );
 
                 if ( ( ( $klammer_ebene == 0 ) && ( $id == '') ) &&
-                    ! cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() )) )
+                    ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() )) )
                     $fertig = true;
 
 
@@ -5156,7 +5156,7 @@ B'01'
                 $id = $this->ScanIdentifier( );
                 }
 
-                    if ( cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
+                    if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
                     $fertig = true;
                         echo "<br> clause start gefunden, gehe zurück zur aufrufenden Funktion " . debug_backtrace()[1]['function'];;
 
@@ -5228,7 +5228,7 @@ B'01'
 
 	  $this->RewindTo( $position );
 
-	  $ret = cMysql57_Utils::IsJoinStart( strtoupper( $name ) ) || ( strtoupper( $name ) == 'ON'  );
+	  $ret = \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $name ) ) || ( strtoupper( $name ) == 'ON'  );
 	  //  echo "<br> FollowsJoin( ) liefert " . ( $ret ? 'true' : 'false' ) ;
 
 	  return $ret;
@@ -5328,12 +5328,12 @@ B'01'
 			$fertig = true;
 			$reference .= $factor;
 
-		    if ( ( ! $this->m_in_join) && ( cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() ) ) ) ) {
+		    if ( ( ! $this->m_in_join) && ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() ) ) ) ) {
 
 			$name .= $this->ScanJoinTable( false );
 
 		    }
-		    if ( cMysql57_Utils::IsClauseStart( strtoupper( $name ) ) ) {
+		    if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $name ) ) ) {
 			$fertig = true;
 
 // 			for ( $i = 0; $i < strlen( $name ); $i++ ) { $this->UnGetCh( ); }
@@ -5381,7 +5381,7 @@ B'01'
 	      }
 
 
-	      if ( cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
+	      if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
 
 		  $fertig = true;
 
@@ -5490,7 +5490,7 @@ B'01'
 
 	    } else {
 
-		if ( !( cMysql57_Utils::IsClauseStart( strtoupper( $this->NextToken( ) ) ) ) ) {
+		if ( !( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $this->NextToken( ) ) ) ) ) {
 
 		    $ref = $this->ScanTableReference( );
 		    $reference .= $ref;
@@ -5786,7 +5786,7 @@ B'01'
 // echo "<br> next identifier is $next_identifier";
 
 		  if ( ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
-		      cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
+		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
 		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
 
 		    $fertig = true;
@@ -5800,7 +5800,7 @@ B'01'
 		    }
 */
 		} elseif ( ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
-		      cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
+		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
 		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
 // echo "<br> cleaning up identifier with $identifier";
 		    if ( strlen( $identifier ) ) {
@@ -6115,7 +6115,7 @@ B'01'
 		$next_identifier = $this->NextIdentifier( );
 
 		  if ( ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
-		      cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
+		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
 		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
 
 		    $fertig = true;
@@ -6127,7 +6127,7 @@ B'01'
 		    }
 */
 		} elseif ( ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
-		      cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
+		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
 		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
 // echo "<br> cleaning up identifier with $identifier";
 
@@ -6361,7 +6361,7 @@ $act = '';
 		    // neu es folgt ein ',', ein 'AS' mit Alias, oder ein Alias ein FROM
 		    $next = $this->NextIdentifier( );
 
-		    if ( ( strtoupper( $next ) != 'FROM' ) && ( cMysql57_Utils::IsClauseStart( strtoupper( trim( $next ) ) ) ) ) {
+		    if ( ( strtoupper( $next ) != 'FROM' ) && ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next ) ) ) ) ) {
 			// $this->DumpStatementRest( );
 			// echo( "<br> <b>SQL-Statement mit SubQuery ohne ALIAS!</b>" );
 			$weiter = false;
