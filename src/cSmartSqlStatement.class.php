@@ -306,6 +306,23 @@ class cSmartSqlStatement {
       * @var array $m_a_group_by the fields which belong to the GROUP BY clause as strings with the column names
       *
       */  	
+      
+      
+	/**
+	 * the line counter of the limit clause of the query
+	 * @var string 
+	 */	
+	
+	
+	public $m_limit_count = '';
+	
+	/**
+	 * the from part of the limit clause of the query
+	 * @var string 
+	 */	
+	
+	
+	public $m_limit_from = '';      
 	
 	
 	
@@ -1166,6 +1183,27 @@ TODO: allow dollar sign in table names
 	// return $this->m_where_clause;
 
     }	// function GetLimitsClause( )
+    
+    /**
+      *
+      * The method GetLimits( ) returns the from and count part of the LIMIT clause of the query
+      *
+      * Example:
+      *
+      *
+      * @param string the returned from part of the query 
+      * @param string the returned line count part of the query
+      *
+      */    	
+	
+
+	public function GetLimits( &$from, &$count ) {
+
+	    $from = $this->m_limit_from;
+
+	    $count = $this->m_limit_count;
+
+	}	// function GetLimits( )    
 
     
     /**
@@ -3297,6 +3335,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 
       private function is_ctype_number_start( $chr ) {
 
+        if ( $chr == '' ) return false;
         return strpos( '+-0123456789.bBxX', $chr ) !== false;
 
       }	// function is_ctype_number_start
@@ -3315,7 +3354,8 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 
       private function is_ctype_number( $chr ) {
 
-	  return strpos( '0123456789eE.', $chr ) !== false;
+        if ( $chr == '' ) return false;
+        return strpos( '0123456789eE.', $chr ) !== false;
 
       }	// function is_ctype_number
       
