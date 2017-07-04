@@ -3334,6 +3334,8 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       private function IsNumberStart( ) {
 
             // steht eine gewöhnliche Zahl oder eine hexadezimale oder binäre Zahl im Eingabepuffer? ?
+            
+            if ( $this->m_chr == '' )  return false;
 
             $ch = $this->m_chr;
             $next_ch = $this->NextCh( );
@@ -3677,6 +3679,8 @@ B'01'
 	  // folgt ein Operator?
 
          // echo "<br> " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Operator in ScanOperator( )";
+         
+     if ( $this->m_chr == '' ) return '';
 
 	  $pos = $this->m_char_index;
 	  $found = false;
