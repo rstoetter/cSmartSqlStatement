@@ -3292,6 +3292,9 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 	private function ScanUntilFolgezeichen( $zeichen ) {
 
 	    $content = '';
+	    
+	    if ( $zeichen == '' ) return '';
+	    if ( $this->m_chr == '' ) return '';
 
 	    assert( strlen( $zeichen ) > 0 );
 
