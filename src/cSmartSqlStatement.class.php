@@ -678,6 +678,24 @@ class cSmartSqlStatement {
 						// zerbrochen sein, weil die inlines ja auch Kommas enthalten können
 
 	// Achtung: Neue Deklarationen im Reset( ) berücksichtigen!
+
+	
+	/**
+	 * The method GetFieldCount( ) returns the number of managed field names
+	 *
+	 * Example:
+	 *
+	 *
+	 * @return int the number of managed field names in $m_a_columns
+	 *
+	 */
+	
+	
+	public function GetFieldCount( ) {
+
+	    return count( $this->m_a_columns );
+
+	}	// function GetFieldCount( )	
 	
 	
     /**
