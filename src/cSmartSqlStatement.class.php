@@ -696,6 +696,25 @@ class cSmartSqlStatement {
 	    return count( $this->m_a_columns );
 
 	}	// function GetFieldCount( )	
+
+	
+	/**
+	 * The method GetField( ) returns the the managed field name with the index $index
+	 *
+	 * Example:
+	 *
+	 * @param int the index of the desired field name
+	 *
+	 * @return string the managed field name with the index $index
+	 * 
+	 */
+	
+
+	public function GetField( $index ) {
+
+	    return $this->m_a_columns[ $index ];
+
+	}	// function GetField( )	
 	
 	
     /**
