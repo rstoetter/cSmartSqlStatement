@@ -1044,6 +1044,8 @@ TODO: allow dollar sign in table names
     
 
     public function AddOrderByClause( $str_clause ) {
+    
+        // echo "<br> order by clause = '$str_clause'";
 
         if ( ! strlen( trim( $str_clause ) ) ) return;
 
@@ -1059,26 +1061,29 @@ TODO: allow dollar sign in table names
         $order = '';
 
             if ( ( strtoupper( substr( $order_by, strlen( $order_by ) - 3 , 3 ) ) ) == 'ASC' ) {
-            $order = ' ' . substr( $order_by, strlen( $order_by ) - 3 , 3 ) . ' ';
-            $order_by = substr( $order_by, 0, strlen( $order_by ) - 3 -1 );
-            // echo "<br> ASC detected";
+                $order = ' ' . substr( $order_by, strlen( $order_by ) - 3 , 3 ) . ' ';
+                $order_by = substr( $order_by, 0, strlen( $order_by ) - 3 -1 );
+                // echo "<br> ASC detected - order = $order order_by = $order_by";
             } elseif ( ( strtoupper( substr( $order_by, strlen( $order_by ) - 4  , 4 ) ) ) == 'DESC' ) {
-            $order = ' ' . substr( $order_by, strlen( $order_by ) - 4 , 4 ) . ' ';
-            $order_by = substr( $order_by, 0, strlen( $order_by ) - 4 -1);
-            // echo "<br> DESC detected";
+                $order = ' ' . substr( $order_by, strlen( $order_by ) - 4 , 4 ) . ' ';
+                $order_by = substr( $order_by, 0, strlen( $order_by ) - 4 -1);
+                // echo "<br> DESC detected";
             } else {
-            // echo "<br> weder ASC noch DESC in '$order_by'";
+                // echo "<br> weder ASC noch DESC in '$order_by'";
             }
 
 
         if ( strlen( trim( $order_by ) ) ) {
-    // 	    echo "<br>AddOrderByClause: adding comma when adding '{$order}' to '{$order_by}'   ";
+     	    // echo "<br>AddOrderByClause: adding comma when adding '{$order}' to '{$order_by}'   ";
+     	    // echo "<br> str_clause = $str_clause";
             $order_by = ' ' . $order_by . ' ';
-            $order_by .= $komma . $str_clause . $order;
+            // $order_by .= $komma . $str_clause . $order;
+            $order_by .=  $order . $komma . $str_clause ;
+            // echo "<br> order_by = $order_by";
         } else {
             $order_by .= $this->_RemoveStartingKomma( $str_clause ) . $order;
         }
-
+        // echo "<br> set order by clause = '$order_by'";
         $this->SetOrderByClause( $order_by  );
 
     }	// function AddOrderByClause( )
