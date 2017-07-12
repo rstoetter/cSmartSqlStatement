@@ -3152,9 +3152,26 @@ TODO: allow dollar sign in table names
 
 	private function is_ctype_identifier( $chr ) {
 
-	    return ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->IsExtraIdentifier( $chr ) ) ;
+	    return ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->IsExtraIdentifier( $chr ) || $this->is_ctype_sonderzeichen( $chr ) ) ;
 
 	}	// function is_ctype_identifier( )
+	
+    /**
+      *
+      * The method is_ctype_sonderzeichen( ) returns true, if $chr is a valid character for identifiers and a country-specific character
+      *
+      * Example:
+      *
+      * @param string $chr is the character to test
+      * @return bool true, if $chr is a valid character for identifiers
+      *
+      */    	
+	
+	private function is_ctype_sonderzeichen( $chr ) {
+	
+            return ( strpos ( 'äöüßÄÖÜ', $chr ) !== false );	
+	
+	}
 	
 	
     /**
@@ -3170,7 +3187,7 @@ TODO: allow dollar sign in table names
 
 	private function is_ctype_dbfield( $chr ) {
 	    // mit dem Schema und oder Tabellennamen
-	    return ( $chr == '.' ) || ( $chr == '_' ) || ( ctype_alnum( $chr ) );
+	    return ( $chr == '.' ) || ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->is_ctype_sonderzeichen( $chr )  ) ;
 
 	}	// function is_ctype_identifier( )
 
@@ -3192,7 +3209,7 @@ TODO: allow dollar sign in table names
 
 	    if ( $chr == '' ) return false;
 
-	    return ( $chr == '_' ) || ( ctype_alpha( $chr ) ) || $this->IsExtraStartIdentifier( $chr );
+	    return ( $chr == '_' ) || ( ctype_alpha( $chr ) ) || $this->IsExtraStartIdentifier( $chr ) || $this->is_ctype_sonderzeichen( $chr ) ;
 
 	}	// function is_ctype_identifier_start( )
 	
