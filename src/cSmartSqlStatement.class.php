@@ -3151,6 +3151,8 @@ TODO: allow dollar sign in table names
 	
 
 	private function is_ctype_identifier( $chr ) {
+	
+        if ( $chr == '' ) return false;
 
 	    return ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->IsExtraIdentifier( $chr ) || $this->is_ctype_sonderzeichen( $chr ) ) ;
 
