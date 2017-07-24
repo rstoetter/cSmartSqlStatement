@@ -6574,7 +6574,7 @@ $act = '';
 if ( true ) {
  	    if ( strlen( trim( $act ) ) ) {
 
-		echo "<brScanFieldList: >addiere verwaistes act : $act";
+		// echo "<brScanFieldList: >addiere verwaistes act : $act";
 
 		$ary[] = trim( $act );
  		$this->m_a_columns[]= trim( $act );
