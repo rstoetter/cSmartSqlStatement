@@ -877,7 +877,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function GetFirstTableName( ) {
+    public function GetFirstTableName( ) : string {
 
 /*
 http://dev.mysql.com/doc/refman/5.5/en/identifiers.html
@@ -905,7 +905,7 @@ TODO: allow dollar sign in table names
 
 	    while ( ctype_space( substr ($this->m_statement, $pos++, 1 ) ) );
 
-	    $pos_start = $pos;
+	    $pos_start = $pos - 1;
 
 	    while (
 		( $pos < strlen( $this->m_statement) ) &&
