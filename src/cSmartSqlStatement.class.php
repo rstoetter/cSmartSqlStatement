@@ -29,9 +29,11 @@
   *
   */
 
-define( '_SQL_GENERATOR_QUERY_TYPE_SELECT', 'SELECT' );  
+
   
 namespace rstoetter\cSmartSqlStatement;  
+
+define( '_SQL_GENERATOR_QUERY_TYPE_SELECT', 'SELECT' );  
 
 /*
 
