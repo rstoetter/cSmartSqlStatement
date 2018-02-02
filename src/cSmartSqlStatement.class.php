@@ -3697,7 +3697,7 @@ B'01'
             }  elseif ( $this->is_ctype_identifier_start( $this->m_chr )  ) {
 
             $identifier = $this->ScanIdentifier( );
-            $statement .= $identifier + ' ';
+            $statement .= $identifier . ' ';
             $this->SkipSpaces( );
 
             } else {
