@@ -2,7 +2,7 @@
     "name": "rstoetter/csmartsqlstatement-php",
     "description": "class to manage SQL SELECT statements - analyze and replace clauses",
     "license": "MIT",
-    "keywords": ["php", "sql","sql statement"],
+    "keywords": ["php", "sql","sql statement", "php7"],
     "authors": [
         {
             "name": "Rainer Stötter",
@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "php": ">=7.0",
         "rstoetter/libsqlphp": ">=1.0.0",
         "rstoetter/csql-php": ">=1.0.0"
     },
