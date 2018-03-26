@@ -1,6 +1,9 @@
 <?php
 
 
+
+
+
 //
 // TODO: cSqlStatement und cSmartSqlStatement in C++ mit antlr ( hat schon eine Grammatik für mysql ) für das CLI
 // TODO: programmieren, da db2phpsite viel Zeit mit cSmartSqlStatement verbringt
