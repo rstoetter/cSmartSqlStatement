@@ -1335,29 +1335,29 @@ TODO: allow dollar sign in table names
       * Example:
       *
       *
-      * @param mixed $ary the from part and the count part as an array of strings or as a string seperated by a comma
+      * @param mixed $mixed the from part and the count part as an array of strings or as a string seperated by a comma
       *
       */         
     
 
-	public function SetLimitClause( array $ary ) {
+	public function SetLimitClause( $mixed ) {
 
 	    // set the field array new - string or array is allowed as parameter
 
-	    $ary = trim( $ary );
+	    $mixed = trim( $mixed );
 
-	    if ( ( $this->m_limit_len == 0 ) && ( is_string( $ary ) ) && ( ! strlen( trim( $ary ) ) ) ) return;
-	    if ( ( $this->m_limit_len == 0 ) && ( is_array( $ary ) ) && ( ! count( $ary ) ) ) return;
+	    if ( ( $this->m_limit_len == 0 ) && ( is_string( $mixed ) ) && ( ! strlen( trim( $mixed ) ) ) ) return;
+	    if ( ( $this->m_limit_len == 0 ) && ( is_array( $mixed ) ) && ( ! count( $mixed ) ) ) return;
 
 	    // $this->Dump( );
 
- 	    if ( is_array( $ary ) ) $ary = implode( ',', $ary );
+ 	    if ( is_array( $mixed ) ) $mixed = implode( ',', $mixed );
 
 // 	    $this->GetFieldsAsString( $str_org_fields );
 
 	    $query = $this->m_statement;
 
-	    // echo "<br> SetFields() mit ary ="; print_r( $ary );
+	    // echo "<br> SetFields() mit ary ="; print_r( $mixed );
 
 	    if ( $this->m_limit_len ) {
             $new_query = substr( $query, 0, $this->m_limit_token_start - ( $this->m_limit_len == 0 ? 0 : 1 ) );
@@ -1367,11 +1367,11 @@ TODO: allow dollar sign in table names
 
 	    if ( $this->m_limit_len == 0 ) $new_query .= ' LIMIT ';
 
-	    if ( $ary == '' || $ary == ',' ) {
+	    if ( $mixed == '' || $mixed == ',' ) {
             $new_query = $this->RemoveStatement( $new_query, 'LIMIT' );
 	    }
 
-	    $new_query .= ' ' . $ary . ' ';
+	    $new_query .= ' ' . $mixed . ' ';
 	    // danach kommt nichts mehr! $new_query .= ' ' . substr( $query, $this->m_limit_start + $this->m_limit_len );
 
 	    $this->ScanStatement( $new_query, 'SELECT' );
@@ -6730,6 +6730,7 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
 
 	    // echo "<br>SetFields() setting new field list = "; var_dump( explode( ',', $ary ) );
 
+	    $str_org_fields = '';
 	    $this->GetFieldsAsString( $str_org_fields );
 
 	    $query = $this->m_statement;
