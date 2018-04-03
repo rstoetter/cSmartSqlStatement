@@ -2831,6 +2831,8 @@ TODO: allow dollar sign in table names
                 $this->m_after_having = $this->m_char_index;
 
                 $this->m_order_by_start = $this->m_char_index;
+                
+                $ary = array( );
                 $order_clause = $this->ScanOrderByCondition( $ary );
                 $this->m_order_by_len = $this->m_char_index - $this->m_order_by_start;
 
