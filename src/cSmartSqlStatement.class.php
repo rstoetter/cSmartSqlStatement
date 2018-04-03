@@ -1050,7 +1050,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function AddOrderByClause( string $str_clause ) : string {
+    public function AddOrderByClause( string $str_clause ) {
     
         // echo "<br> order by clause = '$str_clause'";
 
