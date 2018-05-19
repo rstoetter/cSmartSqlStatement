@@ -698,7 +698,7 @@ class cSmartSqlStatement {
 	 */
 	
 	
-	public function GetFieldCount( ) : int {
+	public function GetFieldCount( ) {
 
 	    return count( $this->m_a_columns );
 
@@ -717,7 +717,7 @@ class cSmartSqlStatement {
 	 */
 	
 
-	public function GetField( int $index ) : string {
+	public function GetField( $index ) {
 
 	    return $this->m_a_columns[ $index ];
 
@@ -736,7 +736,7 @@ class cSmartSqlStatement {
       *
       */    	
 
-    private function _StartingOperator( string $str_clause ) : string {
+    private function _StartingOperator( $str_clause ) {
 
         //
         // liefert den Operator am Anfang der Zeichenkette oder eine leere Zeichenkette
@@ -764,7 +764,7 @@ class cSmartSqlStatement {
       *
       */    	    
 
-    private function _StartingKomma( string $str_clause ) : string {
+    private function _StartingKomma( $str_clause ) {
 
 	//
 	// liefert das Komma am Anfang der Zeichenkette oder eine leere Zeichenkette
@@ -792,7 +792,7 @@ class cSmartSqlStatement {
       */    	    
     
     
-    private function _RemoveStartingKomma( string $str_clause ) : string {
+    private function _RemoveStartingKomma( $str_clause ) {
 
         //
         // liefert das Komma am Anfang der Zeichenkette oder eine leere Zeichenkette
@@ -820,7 +820,7 @@ class cSmartSqlStatement {
       */    	    
     
 
-    public function AddTable( string $table_name ) {
+    public function AddTable( $table_name ) {
 
 /*
 http://dev.mysql.com/doc/refman/5.5/en/identifiers.html
@@ -927,7 +927,7 @@ TODO: allow dollar sign in table names
 
 	    $table_name = substr( $this->m_statement, $pos_start, $pos - $pos_start );
 
-	    // echo "<br>found first table name = $table_name";
+	    // echo "\nfound first table name = $table_name";
 
 	  }
 
@@ -957,7 +957,7 @@ TODO: allow dollar sign in table names
 
 
 
-    public function AddGroupByClause( string $str_clause ) {
+    public function AddGroupByClause( $str_clause ) {
 
 
         if ( ! strlen( trim( $str_clause ) ) ) return;
@@ -1000,7 +1000,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function AddHavingClause( string $str_having ) {
+    public function AddHavingClause( $str_having ) {
 
 
         if ( ! strlen( trim( $str_having ) ) ) return;
@@ -1013,10 +1013,10 @@ TODO: allow dollar sign in table names
         $str_having = '(' . $str_having . ')';
 
         if ( ! strlen( trim( $this->m_group_by_clause ) ) ) {
-            echo "<br> $this->m_statement";
+            echo "\n $this->m_statement";
             $this->DumpState( );
             $this->DumpStatementRest( );
-            echo("<br> Warnung: cSmartSqlStatement: having ohne group by in AddHavingClause( ) !");
+            echo("\n Warnung: cSmartSqlStatement: having ohne group by in AddHavingClause( ) !");
         }
 
         $having = $this->GetHavingClause( );
@@ -1050,9 +1050,9 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function AddOrderByClause( string $str_clause ) {
+    public function AddOrderByClause( $str_clause ) {
     
-        // echo "<br> order by clause = '$str_clause'";
+        // echo "\n order by clause = '$str_clause'";
 
         if ( ! strlen( trim( $str_clause ) ) ) return;
 
@@ -1070,27 +1070,27 @@ TODO: allow dollar sign in table names
             if ( ( strtoupper( substr( $order_by, strlen( $order_by ) - 3 , 3 ) ) ) == 'ASC' ) {
                 $order = ' ' . substr( $order_by, strlen( $order_by ) - 3 , 3 ) . ' ';
                 $order_by = substr( $order_by, 0, strlen( $order_by ) - 3 -1 );
-                // echo "<br> ASC detected - order = $order order_by = $order_by";
+                // echo "\n ASC detected - order = $order order_by = $order_by";
             } elseif ( ( strtoupper( substr( $order_by, strlen( $order_by ) - 4  , 4 ) ) ) == 'DESC' ) {
                 $order = ' ' . substr( $order_by, strlen( $order_by ) - 4 , 4 ) . ' ';
                 $order_by = substr( $order_by, 0, strlen( $order_by ) - 4 -1);
-                // echo "<br> DESC detected";
+                // echo "\n DESC detected";
             } else {
-                // echo "<br> weder ASC noch DESC in '$order_by'";
+                // echo "\n weder ASC noch DESC in '$order_by'";
             }
 
 
         if ( strlen( trim( $order_by ) ) ) {
-     	    // echo "<br>AddOrderByClause: adding comma when adding '{$order}' to '{$order_by}'   ";
-     	    // echo "<br> str_clause = $str_clause";
+     	    // echo "\nAddOrderByClause: adding comma when adding '{$order}' to '{$order_by}'   ";
+     	    // echo "\n str_clause = $str_clause";
             $order_by = ' ' . $order_by . ' ';
             // $order_by .= $komma . $str_clause . $order;
             $order_by .=  $order . $komma . $str_clause ;
-            // echo "<br> order_by = $order_by";
+            // echo "\n order_by = $order_by";
         } else {
             $order_by .= $this->_RemoveStartingKomma( $str_clause ) . $order;
         }
-        // echo "<br> set order by clause = '$order_by'";
+        // echo "\n set order by clause = '$order_by'";
         $this->SetOrderByClause( $order_by  );
 
     }	// function AddOrderByClause( )
@@ -1109,7 +1109,7 @@ TODO: allow dollar sign in table names
 
 
 
-    public function GetGroupByClause( ) : string {
+    public function GetGroupByClause( ) {
 
 
         return substr( $this->m_statement, $this->m_group_by_start, $this->m_group_by_len ) ;
@@ -1131,7 +1131,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function GetHavingClause( ): string {
+    public function GetHavingClause( ) {
 
 
         return substr( $this->m_statement, $this->m_having_start, $this->m_having_len ) ;
@@ -1153,7 +1153,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    public function GetTableNameClause( ) : string {
+    public function GetTableNameClause( ) {
 
 
         return substr( $this->m_statement, $this->m_table_start, $this->m_table_len ) ;
@@ -1175,7 +1175,7 @@ TODO: allow dollar sign in table names
       */    	    
 
 
-    public function GetOrderByClause( ) : string {
+    public function GetOrderByClause( ) {
 
 
         return substr( $this->m_statement, $this->m_order_by_start, $this->m_order_by_len ) ;
@@ -1199,7 +1199,7 @@ TODO: allow dollar sign in table names
       */    	    
     
 
-    private function RemoveStatement( string $query, string $statement ) : string {
+    private function RemoveStatement( $query, $statement ) {
 
         $query = trim( $query );
         $part = substr( $query, - strlen( $statement ) );
@@ -1224,7 +1224,7 @@ TODO: allow dollar sign in table names
       *
       */        
 
-    public function GetLimitsClause( ) : string {
+    public function GetLimitsClause( ) {
 
 
         return substr( $this->m_statement, $this->m_limit_start, $this->m_limit_len ) ;
@@ -1246,7 +1246,7 @@ TODO: allow dollar sign in table names
       */    	
 	
 
-	public function GetLimits( string & $from, string & $count ) {
+	public function GetLimits( &$from, &$count ) {
 
 	    $from = $this->m_limit_from;
 
@@ -1266,7 +1266,7 @@ TODO: allow dollar sign in table names
       *
       */            
     
-    public function GetLimitClause( ) : string {
+    public function GetLimitClause( ) {
 
 
         return substr( $this->m_statement, $this->m_limit_start, $this->m_limit_len ) ;
@@ -1286,7 +1286,7 @@ TODO: allow dollar sign in table names
       *
       */            
 
-    public function GetWhereClause( ) : string {
+    public function GetWhereClause( ) {
 
 
 	return substr( $this->m_statement, $this->m_where_start, $this->m_where_len ) ;
@@ -1308,7 +1308,7 @@ TODO: allow dollar sign in table names
       *
       */         
 
-    public function SetLimits( string $from, string $count = '' ) {
+    public function SetLimits( $from, $count = '' ) {
 
 
 
@@ -1335,29 +1335,29 @@ TODO: allow dollar sign in table names
       * Example:
       *
       *
-      * @param mixed $mixed the from part and the count part as an array of strings or as a string seperated by a comma
+      * @param mixed $ary the from part and the count part as an array of strings or as a string seperated by a comma
       *
       */         
     
 
-	public function SetLimitClause( $mixed ) {
+	public function SetLimitClause( $ary ) {
 
 	    // set the field array new - string or array is allowed as parameter
 
-	    $mixed = trim( $mixed );
+	    $ary = trim( $ary );
 
-	    if ( ( $this->m_limit_len == 0 ) && ( is_string( $mixed ) ) && ( ! strlen( trim( $mixed ) ) ) ) return;
-	    if ( ( $this->m_limit_len == 0 ) && ( is_array( $mixed ) ) && ( ! count( $mixed ) ) ) return;
+	    if ( ( $this->m_limit_len == 0 ) && ( is_string( $ary ) ) && ( ! strlen( trim( $ary ) ) ) ) return;
+	    if ( ( $this->m_limit_len == 0 ) && ( is_array( $ary ) ) && ( ! count( $ary ) ) ) return;
 
 	    // $this->Dump( );
 
- 	    if ( is_array( $mixed ) ) $mixed = implode( ',', $mixed );
+ 	    if ( is_array( $ary ) ) $ary = implode( ',', $ary );
 
 // 	    $this->GetFieldsAsString( $str_org_fields );
 
 	    $query = $this->m_statement;
 
-	    // echo "<br> SetFields() mit ary ="; print_r( $mixed );
+	    // echo "\n SetFields() mit ary ="; print_r( $ary );
 
 	    if ( $this->m_limit_len ) {
             $new_query = substr( $query, 0, $this->m_limit_token_start - ( $this->m_limit_len == 0 ? 0 : 1 ) );
@@ -1367,11 +1367,11 @@ TODO: allow dollar sign in table names
 
 	    if ( $this->m_limit_len == 0 ) $new_query .= ' LIMIT ';
 
-	    if ( $mixed == '' || $mixed == ',' ) {
+	    if ( $ary == '' || $ary == ',' ) {
             $new_query = $this->RemoveStatement( $new_query, 'LIMIT' );
 	    }
 
-	    $new_query .= ' ' . $mixed . ' ';
+	    $new_query .= ' ' . $ary . ' ';
 	    // danach kommt nichts mehr! $new_query .= ' ' . substr( $query, $this->m_limit_start + $this->m_limit_len );
 
 	    $this->ScanStatement( $new_query, 'SELECT' );
@@ -1397,7 +1397,7 @@ TODO: allow dollar sign in table names
       */    	    
 	
 
-    public function AddWhereClause( string $str_clause ) {
+    public function AddWhereClause( $str_clause ) {
 
         $where = $this->GetWhereClause( );
 
@@ -1427,7 +1427,7 @@ TODO: allow dollar sign in table names
       */    
 
 
-	public function SetGroupByClause( string $str_group_by ) {
+	public function SetGroupByClause( $str_group_by ) {
 
 	    // set the existing group_by clause
 
@@ -1497,7 +1497,7 @@ TODO: allow dollar sign in table names
 // 	    }
 
 	    if ( $this->m_group_by_len == 0 ) {
-		$left .= ' group by ';
+            $left .= ' group by ';
 	    }
 
  	    $right = substr( $query, $this->m_group_by_start , $this->m_group_by_len );
@@ -1508,18 +1508,18 @@ TODO: allow dollar sign in table names
 
 	    $new_query = $left . ' ' . $str_group_by . ' ' .   $tail;
 
-	    if ( fale ) {
+	    if ( $this->m_debug_engine > 0 ) {
 
-		echo "\n SetGroupByClause() :";
-		echo "\n org statement = " . $this->m_statement;
-		echo "\n\n left = {$left}";
-		echo "\n neuer group_by-part = {$str_group_by}";
-		echo "\n right ( altes group_by ) = {$right}";
-		echo "\n tail = {$tail}";
-		echo "\n";
-		echo "\n new query =\n" . $new_query;
-		echo "\n--------------------------";
-// 		 die( "\n Abbruch" );
+            echo "\n SetGroupByClause() :";
+            echo "\n org statement = " . $this->m_statement;
+            echo "\n\n left = {$left}";
+            echo "\n neuer group_by-part = {$str_group_by}";
+            echo "\n right ( altes group_by ) = {$right}";
+            echo "\n tail = {$tail}";
+            echo "\n";
+            echo "\n new query =\n" . $new_query;
+            echo "\n--------------------------";
+    // 		 die( "\n Abbruch" );
 
 	    }
 
@@ -1547,7 +1547,7 @@ TODO: allow dollar sign in table names
       */    
 	
 
-	public function SetOrderByClause( string $str_order_by ) {
+	public function SetOrderByClause( $str_order_by ) {
 
 	    // set the existing order_by clause
 
@@ -1596,8 +1596,8 @@ TODO: allow dollar sign in table names
 			$tail = '';
 		    }
 		}
-// 		echo "<br>len query = " . strlen( $query ) . ' und breakpoint = ' . $breakpoint ;
-// 		echo "<br>no len -> left wird zu <br> '$left'" ;
+// 		echo "\nlen query = " . strlen( $query ) . ' und breakpoint = ' . $breakpoint ;
+// 		echo "\nno len -> left wird zu \n '$left'" ;
 
 	    }
 
@@ -1630,17 +1630,17 @@ TODO: allow dollar sign in table names
 
 	    $new_query = $left . ' ' . $str_order_by . ' ' .   $tail;
 
-	    if ( false ) {
+	    if ( $this->m_debug_engine > 0 ) {
 
-		echo "\n SetOrderByClause() :";
-		echo "\n org statement = " . $this->m_statement;
-		echo "\n\n left = {$left}";
-		echo "\n neuer order_by-part = {$str_order_by}";
-		echo "\n right ( altes order_by ) = {$right}";
-		echo "\n tail = {$tail}";
-		echo "\n";
-		echo "\n new query =\n" . $new_query;
-		// die( "\n Abbruch" );
+            echo "\n SetOrderByClause() :";
+            echo "\n org statement = " . $this->m_statement;
+            echo "\n\n left = {$left}";
+            echo "\n neuer order_by-part = {$str_order_by}";
+            echo "\n right ( altes order_by ) = {$right}";
+            echo "\n tail = {$tail}";
+            echo "\n";
+            echo "\n new query =\n" . $new_query;
+            // die( "\n Abbruch" );
 
 	    }
 
@@ -1667,7 +1667,7 @@ TODO: allow dollar sign in table names
       */    
 
 
-	public function SetWhereClause( string $str_where ) {
+	public function SetWhereClause( $str_where ) {
 
 	    // set the existing where clause
 
@@ -1745,20 +1745,20 @@ TODO: allow dollar sign in table names
 
 	    $new_query = $left . ' ' . $str_where . ' ' .   $tail;
 
-	    if ( false ) {
+	    if ( $this->m_debug_engine > 0 ) {
 
-		echo "\n\n SetWhereClause() :";
-		echo "\n pos where token = $this->m_where_token_start" ;
-		echo "\n pos where = $this->m_where_start" ;
-		echo "\n breakpoint where = $breakpoint";
-		echo "\n org statement = " . $this->GetStatement( );
-		echo "\n\n left = {$left}";
-		echo "\n neuer where-part = {$str_where}";
-		echo "\n right ( altes where ) = {$right}";
-		echo "\n tail = '{$tail}'";
-		echo "\n\nnew query = $new_query\n";
-		echo "\n--------------------------------";
-		// die( "\n Abbruch" );
+            echo "\n\n SetWhereClause() :";
+            echo "\n pos where token = $this->m_where_token_start" ;
+            echo "\n pos where = $this->m_where_start" ;
+            echo "\n breakpoint where = $breakpoint";
+            echo "\n org statement = " . $this->GetStatement( );
+            echo "\n\n left = {$left}";
+            echo "\n neuer where-part = {$str_where}";
+            echo "\n right ( altes where ) = {$right}";
+            echo "\n tail = '{$tail}'";
+            echo "\n\nnew query = $new_query\n";
+            echo "\n--------------------------------";
+            // die( "\n Abbruch" );
 
 	    }
 
@@ -1786,7 +1786,7 @@ TODO: allow dollar sign in table names
 	
 
 
-	public function SetHavingClause( str $str_having ) {
+	public function SetHavingClause( $str_having ) {
 
 	    // set the existing having clause
 
@@ -1853,7 +1853,7 @@ TODO: allow dollar sign in table names
 
 	    $new_query = $left . ' ' . $str_having . ' ' .   $tail;
 
-	    if ( false ) {
+	    if ( $this->m_debug_engine > 0 ) {
 
             echo "\n SetHavingClause() :";
             echo "\n org statement = " . $this->m_statement;
@@ -1880,12 +1880,11 @@ TODO: allow dollar sign in table names
       * Example:
       *
       * @param string $str the query where the trailing semicolon should be removed
-      * @return bool true, if a trailing semicolon was removed
       *
       */    
 
 
-    private function RemoveTrailingSemicolon( string & $str ) : bool {
+    private function RemoveTrailingSemicolon( & $str ) {
 
         if ( substr( trim( $str ), strlen( trim( $str ) ) - 1 , 1 ) == ';' ) {
 
@@ -1923,7 +1922,7 @@ TODO: allow dollar sign in table names
         }
 
         if ( ! strlen( trim( $clause ) ) ) {
-            echo "<br> Warnung: leerer Eintrag für _SeekClausePart( ) ";
+            echo "\n Warnung: leerer Eintrag für _SeekClausePart( ) ";
             return;
         }
 
@@ -1954,7 +1953,7 @@ TODO: allow dollar sign in table names
 
         for ( $i = $i; $i < strlen( $clause ); $i++ ) {
 
-            // echo "<br> statement = '" . substr( $this->m_statement, $j ) . "'  clause = '" . substr( $clause, $i) . "'";
+            // echo "\n statement = '" . substr( $this->m_statement, $j ) . "'  clause = '" . substr( $clause, $i) . "'";
 
             if  ( ctype_space( substr( $clause, $i, 1 ) ) || ( ctype_space( substr( $this->m_statement, $j, 1 ) )  ) ) {
             while ( ctype_space( substr( $clause, $i, 1 ) ) ) $i++;
@@ -1986,7 +1985,7 @@ TODO: allow dollar sign in table names
 
         if ( ! $ret) {
 
-            // echo "<br> _FoundClausePart:  nicht gefunden : '$clause' in '$this->m_statement'";
+            // echo "\n _FoundClausePart:  nicht gefunden : '$clause' in '$this->m_statement'";
 
             $start = -1;
             $end = -1;
@@ -1995,7 +1994,7 @@ TODO: allow dollar sign in table names
 
             $end = $j ;
 
-            // echo "<br> _FoundClausePart: gefunden: " . substr( $this->m_statement, $start, $end - $start  );
+            // echo "\n _FoundClausePart: gefunden: " . substr( $this->m_statement, $start, $end - $start  );
 
             // abgeschlossen : von $start bis $end" geht die gefundene Zeichenkette
             // -> substr( $this->m_statement, $start, $end - $start + 1 )
@@ -2020,7 +2019,7 @@ TODO: allow dollar sign in table names
       */    
 
 
-    public function Reset( string $query_type ) {
+    public function Reset( $query_type ) {
 
         // m_id_extra und m_id_start_extra bleiben erhalten
 
@@ -2103,10 +2102,10 @@ TODO: allow dollar sign in table names
       */    
 
 
-    public function IsFieldAlias( string $identifier ) : bool {
+    public function IsFieldAlias( $identifier ) {
 
 
-//     echo '<br>erkannte Aliases ='; cDebugUtilities::PrintArray( $this->m_a_field_aliases );
+//     echo '\nerkannte Aliases ='; cDebugUtilities::PrintArray( $this->m_a_field_aliases );
 
         for ( $i = 0; $i < count( $this->m_a_field_aliases ); $i++ ) {
             if ( $this->m_a_field_aliases[ $i ] == $identifier ) return true;
@@ -2128,7 +2127,7 @@ TODO: allow dollar sign in table names
       */    
     
 
-    public function GetTableCount( ) : int {
+    public function GetTableCount( ) {
 
         return count( $this->m_a_tables );
 
@@ -2144,7 +2143,7 @@ TODO: allow dollar sign in table names
       *
       */     
 
-    public function GetTableDeclaration( int $index ) : string {
+    public function GetTableDeclaration( $index ) {
 
         return $this->m_a_tables[ $index ] ;
 
@@ -2162,7 +2161,7 @@ TODO: allow dollar sign in table names
       *
       */   
 
-	public function GetTableNames( bool $remove_AS = true ) : array {	// TODO erweitern
+	public function GetTableNames( $remove_AS = true ) {	// TODO erweitern
 
 	      // wenn gilt remove_AS = true, dann wird der ALIAS, falls vorhanden, entfernt
 	      // es können mehrere Tabellennamen von GetTable( ) geliefert werden samt AS-Ersetzungsnamen
@@ -2201,7 +2200,7 @@ TODO: allow dollar sign in table names
       */   
 	
 
-	public function SetTableNames( array $ary ) {
+	public function SetTableNames( $ary ) {
 
 	    // set the field array new - string or array is allowed as parameter
 
@@ -2211,13 +2210,13 @@ TODO: allow dollar sign in table names
 
 	    if ( is_array( $ary ) ) $ary = implode( ',', $ary );
 
-	    // echo "<br>SetFields() setting new field list = "; var_dump( explode( ',', $ary ) );
+	    // echo "\nSetFields() setting new field list = "; var_dump( explode( ',', $ary ) );
 
 
 
 	    $query = $this->m_statement;
 
-	    // echo "<br> SetFields() mit ary ="; print_r( $ary );
+	    // echo "\n SetFields() mit ary ="; print_r( $ary );
 
 	    $new_query = substr( $query, 0, $this->m_table_start - 1 );
 
@@ -2245,7 +2244,7 @@ TODO: allow dollar sign in table names
       *
       */   	
 
-	public function GetTableAliases( ) : array {	// TODO erweitern - und korrekt abarbeiten
+	public function GetTableAliases( ) {	// TODO erweitern - und korrekt abarbeiten
 
 	      // es können mehrere Tabellennamen von GetTable( ) geliefert werden samt AS-Ersetzungsnamen
 
@@ -2273,7 +2272,7 @@ TODO: allow dollar sign in table names
 	
 	
 
-    public function SetDebugLevel( int $level ) {
+    public function SetDebugLevel( $level ) {
 
         $this->m_debug_engine = $level;
 
@@ -2292,7 +2291,7 @@ TODO: allow dollar sign in table names
       */   	
     
 
-    public function IsExtraOption( string $extra_option ) : bool {
+    public function IsExtraOption( $extra_option ) {
 
         return ( stripos( $this->m_extra, $extra_option ) !== false );
 
@@ -2309,13 +2308,13 @@ TODO: allow dollar sign in table names
       *
       */   	    
 
-    public function IsDistinct(  ) : bool {
+    public function IsDistinct(  ) {
 
 	// distinct kann auch ein distinctfrom sein!
 
         return ( $this->IsExtraOption( 'distinct' ) && ( ! $this->IsExtraOption( 'distinctfrom' ) ) )  ;
 
-    }	// function IsExtra( )
+    }	// function IsDistinct( )
     
     /**
       *
@@ -2343,7 +2342,7 @@ TODO: allow dollar sign in table names
 
 	// distinct kann auch ein distinctfrom sein!
 
-    }	// function IsExtra( )
+    }	// function SetDistinct( )
 
 
     /**
@@ -2356,7 +2355,7 @@ TODO: allow dollar sign in table names
       */   	    
 
       
-    public function SetExtraStartIdentifier( string $str ) {
+    public function SetExtraStartIdentifier( $str ) {
 
         $this->m_id_start_extra = $str;
 
@@ -2373,7 +2372,7 @@ TODO: allow dollar sign in table names
       */   	    
     
 
-    public function SetExtraIdentifier( string $str ) {
+    public function SetExtraIdentifier( $str ) {
 
         $this->m_id_extra = $str;
 
@@ -2393,7 +2392,7 @@ TODO: allow dollar sign in table names
       */   	    
 
 
-    protected function IsExtraStartIdentifier( string $chr ) : bool {
+    protected function IsExtraStartIdentifier( $chr ) {
 
         for ( $i = 0; $i < strlen( $this->m_id_start_extra ); $i++ ) {
 
@@ -2420,7 +2419,7 @@ TODO: allow dollar sign in table names
     
 
 
-    protected function IsExtraIdentifier( string $chr ) : bool {
+    protected function IsExtraIdentifier( $chr ) {
 
         for ( $i = 0; $i < strlen( $this->m_id_extra ); $i++ ) {
 
@@ -2444,7 +2443,7 @@ TODO: allow dollar sign in table names
       */   	    
     
     
-    function _construct( string $sql_type ) {
+    function _construct( $sql_type ) {
 
       parent::_construct( $sql_type );
 
@@ -2462,7 +2461,7 @@ TODO: allow dollar sign in table names
       
     function _destruct( ) {
 
-        parent::_destruct( );
+      parent::_destruct( );
 
     }	// function _construct( )
 
@@ -2477,36 +2476,36 @@ TODO: allow dollar sign in table names
       */   	    
 
 
-    public function Dump( bool $ausgiebig = false ) {
+    public function Dump( $ausgiebig = false ) {
 
-        parent::Dump( );
+        // parent::Dump( );
 
-        echo "<br> statement = <br> $this->m_statement";
+        echo "\n statement = \n $this->m_statement";
 
 	    if ( true ) {
 
-            // echo "<br> clean query = $this->m_clean_query ";
-            echo "<br> query = $this->m_statement ";
-            echo "<br>\t fields   = '" . substr( $this->m_statement, $this->m_field_start, $this->m_field_len ) . "'";
-            echo "<br>\t tables   = '" . substr( $this->m_statement, $this->m_table_start, $this->m_table_len ) . "'";
-            echo "<br>\t where    = '" . substr( $this->m_statement, $this->m_where_start, $this->m_where_len ) . "'";
-            echo "<br>\t group by = '" . substr( $this->m_statement, $this->m_group_by_start, $this->m_group_by_len ) . "'";
-            echo "<br>\t having   = '" . substr( $this->m_statement, $this->m_having_start, $this->m_having_len ) . "'";
-            echo "<br>\t order by = '" . substr( $this->m_statement, $this->m_order_by_start, $this->m_order_by_len ) . "'";
-            echo "<br>\t limit    = '" . substr( $this->m_statement, $this->m_limit_start, $this->m_limit_len ) . "'";
+            // echo "\n clean query = $this->m_clean_query ";
+            echo "\n query = $this->m_statement ";
+            echo "\n\t fields   = '" . substr( $this->m_statement, $this->m_field_start, $this->m_field_len ) . "'";
+            echo "\n\t tables   = '" . substr( $this->m_statement, $this->m_table_start, $this->m_table_len ) . "'";
+            echo "\n\t where    = '" . substr( $this->m_statement, $this->m_where_start, $this->m_where_len ) . "'";
+            echo "\n\t group by = '" . substr( $this->m_statement, $this->m_group_by_start, $this->m_group_by_len ) . "'";
+            echo "\n\t having   = '" . substr( $this->m_statement, $this->m_having_start, $this->m_having_len ) . "'";
+            echo "\n\t order by = '" . substr( $this->m_statement, $this->m_order_by_start, $this->m_order_by_len ) . "'";
+            echo "\n\t limit    = '" . substr( $this->m_statement, $this->m_limit_start, $this->m_limit_len ) . "'";
 
 
             if ( $ausgiebig ) {
-                echo "<br> Reststrings:";
+                echo "\n Reststrings:";
 
-                echo "<br> query = $this->m_statement ";
-                echo "<br>\t fields   = '" . substr( $this->m_statement, $this->m_field_start ) . "'";
-                echo "<br>\t tables   = '" . substr( $this->m_statement, $this->m_table_start ) . "'";
-                echo "<br>\t where    = '" . substr( $this->m_statement, $this->m_where_start ) . "'";
-                echo "<br>\t group by = '" . substr( $this->m_statement, $this->m_group_by_start ) . "'";
-                echo "<br>\t having   = '" . substr( $this->m_statement, $this->m_having_start ) . "'";
-                echo "<br>\t order by = '" . substr( $this->m_statement, $this->m_order_by_start ) . "'";
-                echo "<br>\t limit    = '" . substr( $this->m_statement, $this->m_limit_start ) . "'";
+                echo "\n query = $this->m_statement ";
+                echo "\n\t fields   = '" . substr( $this->m_statement, $this->m_field_start ) . "'";
+                echo "\n\t tables   = '" . substr( $this->m_statement, $this->m_table_start ) . "'";
+                echo "\n\t where    = '" . substr( $this->m_statement, $this->m_where_start ) . "'";
+                echo "\n\t group by = '" . substr( $this->m_statement, $this->m_group_by_start ) . "'";
+                echo "\n\t having   = '" . substr( $this->m_statement, $this->m_having_start ) . "'";
+                echo "\n\t order by = '" . substr( $this->m_statement, $this->m_order_by_start ) . "'";
+                echo "\n\t limit    = '" . substr( $this->m_statement, $this->m_limit_start ) . "'";
             }
 
 	    }
@@ -2527,7 +2526,7 @@ TODO: allow dollar sign in table names
       */   	    
     
 
-    public function GetStatement( ) : string {
+    public function GetStatement( ) {
 
         return $this->m_statement;
 
@@ -2545,9 +2544,9 @@ TODO: allow dollar sign in table names
       */   	    
     
 
-    public function GetStatementHTML( string $msg = '' ) {
+    public function GetStatementHTML( $msg = null ) {
 
-        $sql = '<br>' . $this->m_statement;
+        $sql = '\n' . $this->m_statement;
 
         $sql = preg_replace( '/[+[:blank:]][fF][rR][oO][mM][+[:blank:]]/', '<b> from </b>', $sql );
         $sql = preg_replace( '/[+[:blank:]][wW][hH][eE][rR][eE][+[:blank:]]/', '<b> where </b>', $sql );
@@ -2558,7 +2557,7 @@ TODO: allow dollar sign in table names
         $sql = preg_replace( '/[+[:blank:]][aA][sS][+[:blank:]]([a-zA-Z_]*[a-zA-Z_0-9])/', ' <span style="color:green">as \1</span> ', $sql );
 
 
-        return $sql . '<br>';
+        return $sql . '\n';
 
     }	// function GetStatementHTML( )
     
@@ -2570,7 +2569,7 @@ TODO: allow dollar sign in table names
 	 */
 
 
-	public function SetExtra( string $extra ) {
+	public function SetExtra( $extra ) {
 		$this->m_extra = $extra;
 	}    
     
@@ -2586,11 +2585,9 @@ TODO: allow dollar sign in table names
       */   	        
     
 
-    public function ScanStatement( string $sql_statement, string $query_type = '' ) {
-    
-        $query_type = trim( $query_type );
+    public function ScanStatement( $sql_statement, $query_type = null ) {
 
-        if ( ( $query_type != '' ) ) if ( strlen( $query_type) ) $this->Reset( $query_type );
+        if ( ! is_null( $query_type) ) if ( strlen( $query_type) ) $this->Reset( $query_type );
 
         $this->m_statement = trim( $sql_statement );
 
@@ -2605,12 +2602,12 @@ TODO: allow dollar sign in table names
         $pos_act_token = -1;
 
         $this->m_columns = array( );
-        // echo "<br><h2> Starte ScanStatement()</h2>" . ' (' . debug_backtrace()[2]['function'] . ' /' . debug_backtrace()[1]['line'] . ')' ;
-        // echo "<br> statement = " . $this->GetStatementHTML();
+        // echo "\n<h2> Starte ScanStatement()</h2>" . ' (' . debug_backtrace()[2]['function'] . ' /' . debug_backtrace()[1]['line'] . ')' ;
+        // echo "\n statement = " . $this->GetStatementHTML();
 
-        if ( trim ( $this->m_statement ) == '' ) {
+        if ( $this->m_statement == '' ) {
             // assert( false == true );		// show trace
-            throw new \Exception( '<br> Unrecoverable error: ScanStatement( ) got an empty string - no sql statement ' . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')' );
+            throw new \Exception( '\n Unrecoverable error: ScanStatement( ) got an empty string - no sql statement ' . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')' );
         }
 
         if ( strtoupper( substr( $this->m_statement, 0, 6 ) ) == 'SELECT' ) {
@@ -2621,12 +2618,12 @@ TODO: allow dollar sign in table names
             $this->GetCh( );
             $this->SkipSpaces( );
 
-            //  echo "<br> betrachte $this->m_chr";
+            //  echo "\n betrachte $this->m_chr";
 
             // start statements zusammensuchen
 
             $start_statement = '';
-            // echo '<br><h3>Scanne Special Start Items</h3>';
+            // echo '\n<h3>Scanne Special Start Items</h3>';
             while ( \rstoetter\libsqlphp\cMySql57_Utils::IsStartStatement( $id = $this->ScanIdentifier( ) ) ) {
 
         // 		  $this->ScanIdentifier( );
@@ -2649,9 +2646,9 @@ TODO: allow dollar sign in table names
 
             $start_statement .= ' ';
 
-            //  echo "<br> start_statement = $start_statement";
+            //  echo "\n start_statement = $start_statement";
 
-    // 		echo '<br><h3>Scanne Feldliste </h3>';
+    // 		echo '\n<h3>Scanne Feldliste </h3>';
             // Feldliste zusammensuchen
             $ary_fields = array( );
 
@@ -2662,25 +2659,26 @@ TODO: allow dollar sign in table names
             $this->m_in_fieldlist = false;
             $this->m_field_len = $this->m_char_index - $this->m_field_start;
 
-            // echo "<br><b>oben ermittelte Felder</b> =", substr( $this->m_statement, $this->m_field_start, $this->m_field_len ) ;
+            // echo "\n<b>oben ermittelte Felder</b> =", substr( $this->m_statement, $this->m_field_start, $this->m_field_len ) ;
 
-            // echo "<br>ScanStatement: ary_fields=<br>"; var_dump( $ary_fields );
+            // echo "\nScanStatement: ary_fields=\n"; var_dump( $ary_fields );
 
             $this->m_a_fields = array( );
             for ( $j = 0; $j < count( $ary_fields ); $j++ ) {
 
-            if ( strlen( trim( $ary_fields[ $j ] ) ) ) {
+                if ( strlen( trim( $ary_fields[ $j ] ) ) ) {
 
-                $this->m_a_fields[] = trim( $ary_fields[ $j ] );
+                    $this->m_a_fields[] = trim( $ary_fields[ $j ] );
 
+                }
             }
-            }
 
-            if ( false ) {
+            if ( $this->m_debug_engine > 0 ) {
+                echo "\n ScanStatement( ) \n";
                 var_dump( $this->m_a_fields );
                 $this->DumpState();
                 echo "\n $this->m_statement";
-                die("\n Abbruch");
+                // die("\n Abbruch");
             }
 
             // FROM-Statement zusammentragen
@@ -2690,26 +2688,26 @@ TODO: allow dollar sign in table names
 
             assert( strtoupper( trim( $identifier ) ) == 'FROM' );
             if ( strtoupper( trim( $identifier ) ) != 'FROM' ) {
-                echo "<br> cSmartSqlStatement: From erwartet aber nicht gefunden <br> query = <br>" . $this->m_statement;;
-                echo "<br> identifier ist " . $identifier;
-                echo "<br> m_chr = '" . $this->m_chr . "'";
-                echo "<br> bin gerade bei "; $this->DumpStatementRest();
-                die( "<br>Abbruch" );
+                echo "\n cSmartSqlStatement: From erwartet aber nicht gefunden \n query = \n" . $this->m_statement;;
+                echo "\n identifier ist " . $identifier;
+                echo "\n m_chr = '" . $this->m_chr . "'";
+                echo "\n bin gerade bei "; $this->DumpStatementRest();
+                die( "\nAbbruch" );
             }
 
             $this->SkipSpaces( );
 
-    // 		echo "<br> erkannte Spalten=";cDebugUtilities::PrintArray( $this->m_a_columns );
+    // 		echo "\n erkannte Spalten=";cDebugUtilities::PrintArray( $this->m_a_columns );
 
-    // 		echo '<br><h3>Scanne Tabellennamen </h3>';
+    // 		echo '\n<h3>Scanne Tabellennamen </h3>';
             $this->m_table_start = $this->m_char_index ;	// nach 'FROM'
 
     ### alles durcheinander - hier und bei SetFields()!
 
             $tablereferences = $this->ScanTableReferences( );
             $this->m_table_len = $this->m_char_index - $this->m_table_start;
-    // echo "<br> nach ScanTableReferences( ) ( $this->m_table_start, $this->m_table_end ) : '" . substr( $this->m_statement, $this->m_table_start, $this->m_table_end - $this->m_table_start ) . "'";
-            //  echo "<br> table references =>" . $tablereferences;
+    // echo "\n nach ScanTableReferences( ) ( $this->m_table_start, $this->m_table_end ) : '" . substr( $this->m_statement, $this->m_table_start, $this->m_table_end - $this->m_table_start ) . "'";
+            //  echo "\n table references =>" . $tablereferences;
 
             $this->m_after_table_references = $this->m_char_index;
 
@@ -2717,14 +2715,14 @@ TODO: allow dollar sign in table names
             if ( substr( $chk, 0, 1 ) == ';' ) {
                 $this->m_after_table_references = -1;
                 $this->m_statement = substr( $this->m_statement, 0, $this->m_char_index  );
-                // echo "<br> shortening statement = '$this->m_statement'";
+                // echo "\n shortening statement = '$this->m_statement'";
                 $this->m_where_part = '';
             }
 
-    // 		echo "<br> erkannte Tabellen=";cDebugUtilities::PrintArray( $this->m_a_tables );
+    // 		echo "\n erkannte Tabellen=";cDebugUtilities::PrintArray( $this->m_a_tables );
 
 
-    // 		echo '<br><h3>Scanne restliche Statements </h3>';
+    // 		echo '\n<h3>Scanne restliche Statements </h3>';
             while ( $this->m_chr != '' ) {
 
             $this->SkipSpaces( );
@@ -2735,7 +2733,7 @@ TODO: allow dollar sign in table names
 
             if ( ! ( ( $this->m_chr == '' ) || ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $identifier ) ) ) || ( $this->m_chr == ';' ) ) ) {
 
-                echo "<br> Ende oder ClauseStart:m_chr = $this->m_chr";
+                echo "\n Ende oder ClauseStart:m_chr = $this->m_chr";
                 $this->DumpState( );
                 $this->DumpStatementAbgearbeitet( );
                 $this->DumpStatementRest( );
@@ -2744,7 +2742,7 @@ TODO: allow dollar sign in table names
 
             }
 
-            //  echo "<br> ScanStatement identifier ==> $identifier";
+            //  echo "\n ScanStatement identifier ==> $identifier";
             $this->SkipSpaces( );
 
             if ( $this->m_chr == ';' ) {
@@ -2771,7 +2769,7 @@ TODO: allow dollar sign in table names
                 $identifier = $this->ScanTableOrFieldName( );
                 $identifier = strtoupper( $identifier );
                 if( strtoupper( $identifier != 'BY' ) ) {
-                die("<br> error parsing group by");
+                die("\n error parsing group by");
                 }
 
                 $this->SkipSpaces( );
@@ -2780,6 +2778,7 @@ TODO: allow dollar sign in table names
                 $this->m_after_where = $this->m_char_index;
 
                 $this->m_group_by_start = $this->m_char_index;
+                $ary = array( );
                 $group_clause = $this->ScanGroupByCondition( $ary );
                 $this->m_a_group_by = $ary;
                 $this->m_group_by_len = $this->m_char_index - $this->m_group_by_start;
@@ -2789,37 +2788,38 @@ TODO: allow dollar sign in table names
 
                 $this->m_having_token_start = $pos_act_token;
 
-                //  echo "<br> working on HAVING";
+                //  echo "\n working on HAVING";
 
                 $this->SkipSpaces( );
 
                 if ( $this->m_after_table_references == -1 ) $this->m_after_table_references = $this->m_char_index;
-                if ( $this->m_after_where == -1 ) die( "<br> having without group by in query <br> $this->m_statement" );
+                if ( $this->m_after_where == -1 ) die( "\n having without group by in query \n $this->m_statement" );
 
                 $this->m_after_having = $this->m_char_index;
 
                 $this->m_having_start = $this->m_char_index;
                 $having_clause = $this->ScanHavingCondition( );
                 $this->m_having_len = $this->m_char_index - $this->m_having_start;
-                //  echo "<br> having clause = $having_clause";
+                //  echo "\n having clause = $having_clause";
                 $this->m_having_clause = $having_clause;
 
-                if ( false ) {
-                echo "\n"; var_dump( $this->m_having_clause );
-                $this->DumpState();
-                echo "\n $this->m_statement";
-                die("\n Abbruch nach HAVING");
+                if ( $this->m_debug_engine > 0 ) {
+                    echo "\n HAVING mit ";
+                    echo "\n"; var_dump( $this->m_having_clause );
+                    $this->DumpState();
+                    echo "\n $this->m_statement";
+                    // die("\n Abbruch nach HAVING");
                 }
 
             } elseif ( $identifier == 'ORDER' ) {
 
                 $this->m_order_by_token_start = $pos_act_token;
 
-                // echo "<br> working on ORDER";
+                // echo "\n working on ORDER";
 
                 $identifier = $this->ScanIdentifier( true );
                 if( $identifier != 'BY' ) {
-                die("<br> error parsing order by in query = '$this->m_statement'");
+                    die("\n error parsing order by in query = '$this->m_statement'");
                 }
 
                 $this->SkipSpaces( );
@@ -2831,14 +2831,13 @@ TODO: allow dollar sign in table names
                 $this->m_after_having = $this->m_char_index;
 
                 $this->m_order_by_start = $this->m_char_index;
-                
                 $ary = array( );
                 $order_clause = $this->ScanOrderByCondition( $ary );
                 $this->m_order_by_len = $this->m_char_index - $this->m_order_by_start;
 
                 $this->m_order_by_clause = $order_clause ;
 
-                // echo "<br> order by erhält '$order_clause'";
+                // echo "\n order by erhält '$order_clause'";
 
 
             } elseif ( $identifier == 'LIMIT' ) {
@@ -2848,7 +2847,7 @@ TODO: allow dollar sign in table names
     // 			$identifier = $this->ScanIdentifier( true );
     /*			if( $identifier != 'BY' ) {
                 $this->DumpStatementRest( );
-                die("<br> error parsing limit by");
+                die("\n error parsing limit by");
 
                 }
     */
@@ -2857,7 +2856,7 @@ TODO: allow dollar sign in table names
 
 
                 $this->m_limit_start = $this->m_char_index;
-                // echo "<br> scanning LIMIT";
+                // echo "\n scanning LIMIT";
                 $limit = $this->ScanLimitCondition( $ary_limit );
                 $this->m_limit_len = $this->m_char_index - $this->m_limit_start;
 
@@ -2865,18 +2864,18 @@ TODO: allow dollar sign in table names
                 $this->m_limit_count = $ary_limit[1];
 
             } elseif ( $this->m_chr != '' ) {
-                echo "<br>  ScanStatement: m_statement = <br> $this->m_statement";
+                echo "\n  ScanStatement: m_statement = \n $this->m_statement";
                 $this->DumpStatementRest( );
-                echo "<br>m_chr = '" . $this->m_chr . "'";
-                echo("<br>unrecoverable error: unknown condition in sql statement : '$identifier'" . __LINE__  .
+                echo "\nm_chr = '" . $this->m_chr . "'";
+                echo("\nunrecoverable error: unknown condition in sql statement : '$identifier'" . __LINE__  .
                 ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')' );
                 $this->DumpState( );
                 $this->DumpStatementRest( );
-                die("<br>Abbruch");
+                die("\nAbbruch");
 
             }
 
-            //  echo "<br> Das Rest-Statement ->" . substr( $this->m_statement, $this->m_char_index ) ;
+            //  echo "\n Das Rest-Statement ->" . substr( $this->m_statement, $this->m_char_index ) ;
 
             }	// while
 
@@ -2884,7 +2883,7 @@ TODO: allow dollar sign in table names
 
             $this->SetExtra( $start_statement );
 
-            // echo "<br> ary_fields in ScanStatement: " ; print_r( $ary_fields );
+            // echo "\n ary_fields in ScanStatement: " ; print_r( $ary_fields );
 
 // ???            $this->ResetColumns( );
 
@@ -2917,7 +2916,7 @@ TODO: allow dollar sign in table names
                 $this->m_limit_len = 0;
             }
 
-            // echo "<br>limit start = $this->m_limit_start und limit len = $this->m_limit_len";
+            // echo "\nlimit start = $this->m_limit_start und limit len = $this->m_limit_len";
 
             if ( $this->m_order_by_start == -1 ) {
                 if ( $this->m_having_start != -1 ) $this->m_order_by_start = $this->m_having_start + $this->m_having_len;
@@ -2955,36 +2954,37 @@ TODO: allow dollar sign in table names
 
             // Debugging
 
-            if ( false ) {
+            if ( $this->m_debug_engine > 0 ) {
 
-                echo "<br> von ScanStatement() eingelesenes statement = " . $this->GetStatementHTML( );
+                echo "\n von ScanStatement() eingelesenes statement = " . $this->GetStatementHTML( );
 
-                echo "<br> erkannte Joins=";
-                cDebugUtilities::PrintArray( 'erkannte Joins', $this->m_a_joins );
+                echo "\n erkannte Joins=\n";
+                var_dump( $this->m_a_joins );
 
-                echo "<br> erkannte Join-Tabellen=";
-                cDebugUtilities::PrintArray( 'erkannte Join-Tabellen', $this->m_a_join_tables );
+                echo "\n erkannte Join-Tabellen=\n";
+                var_dump( $this->m_a_join_tables );
 
-                echo "<br> erkannte Spalten=";
+                echo "\n erkannte Spalten=\n";
                 $a_fld = array( );
                 $this->GetFields( $a_fld );
-                cDebugUtilities::PrintArray( 'erkannte Spalten', $a_fld );
+                var_dump( $a_fld );
 
-                echo "<br> erkannte Tabellen=";
-                cDebugUtilities::PrintArray( 'erkannte Tabellen', $this->m_a_tables );
+                echo "\n erkannte Tabellen=\n";
+                var_dump( $this->m_a_tables );
 
-                cDebugUtilities::PrintArray( 'Gefundene Feld-Aliases:', $this->m_a_field_aliases );
+                echo "\nGefundene Feld-Aliases:\n";
+                var_dump( $this->m_a_field_aliases );
 
-                echo "<br> Ermittelte Feldnamen =";
+                echo "\n Ermittelte Feldnamen =\n";
                 for ( $i = 0; $i < $this->GetFieldCount( ); $i++ ) {
 
-                    echo "<br>" . $this->GetField( $i );
+                    echo "\n" . $this->GetField( $i );
 
                 }
-                echo "<br> Ermittelte Tabellennamen =";
+                echo "\nErmittelte Tabellennamen =\n";
                 for ( $i = 0; $i < $this->GetTableCount( ); $i++ ) {
 
-                    echo "<br>" . $this->GetTableDeclaration( $i ) ;
+                    echo "\n" . $this->GetTableDeclaration( $i ) ;
 
                 }
 
@@ -2993,7 +2993,7 @@ TODO: allow dollar sign in table names
         } else {
 
             throw new \Exception(
-            "<br> cSqlStatementGenerator not programmed for sql queries like " .
+            "\n cSqlStatementGenerator not programmed for sql queries like " .
             $sql_statement .
             ' - '  .
             ' (' .
@@ -3010,7 +3010,7 @@ TODO: allow dollar sign in table names
 
         }
 
-        //  echo "<br><h2>  ScanStatement() beendet</h2>";
+        //  echo "\n<h2>  ScanStatement() beendet</h2>";
 
     }	// function ScanStatement( )
 
@@ -3025,7 +3025,7 @@ TODO: allow dollar sign in table names
       *
       */     
 
-    private function ArrayClean( array & $ary ) {
+    private function ArrayClean( & $ary ) {
 
         for ( $i = 0; $i < count( $ary ); $i++ ) {
             $ary[ $i ] = trim( $ary[ $i ] );
@@ -3046,7 +3046,7 @@ TODO: allow dollar sign in table names
       */     
     
 
-	private function NextCh( ) : string {
+	private function NextCh( ) {
 
 	    $ret = '';
 
@@ -3062,7 +3062,7 @@ TODO: allow dollar sign in table names
             $this->m_chr = $old;
 
             if( $old != $this->m_chr ) {
-                echo "<br> NextCh: old = '$old' und m_chr = '{$this->m_chr}' !";
+                echo "\n NextCh: old = '$old' und m_chr = '{$this->m_chr}' !";
             }
 
 	    }
@@ -3086,8 +3086,8 @@ TODO: allow dollar sign in table names
 	    $this->m_char_index--;
 	    $this->m_chr =  substr( $this->m_statement, $this->m_char_index, 1 ) ;
 
-	    // echo "<br>\t\t\t\t\t UnGetCh( )!" . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
-	    // echo "<br>\t\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
+	    // echo "\n\t\t\t\t\t UnGetCh( )!" . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
+	    // echo "\n\t\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
 
 	}	// function UnGetCh( )
 	
@@ -3100,7 +3100,7 @@ TODO: allow dollar sign in table names
       */     
 	
 
-	private function RewindTo( int $index ) {
+	private function RewindTo( $index ) {
 
 
 
@@ -3108,8 +3108,8 @@ TODO: allow dollar sign in table names
 	    $this->m_chr =  substr( $this->m_statement, $this->m_char_index, 1 ) ;
 
 
-	    // echo "<br>\t\t\t\t\t RewindTo( ) in " . debug_backtrace()[1]['function']  . "!";
-	    // echo "<br>\t\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
+	    // echo "\n\t\t\t\t\t RewindTo( ) in " . debug_backtrace()[1]['function']  . "!";
+	    // echo "\n\t\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
 
 	}	// function UnGetCh( )
 
@@ -3123,21 +3123,23 @@ TODO: allow dollar sign in table names
       */     
 	
 
-	private function GetCh( ) : string {
+	private function GetCh( ) {
 
 	  if ( $this->m_char_index <= strlen( $this->m_statement ) ) {
 
-		$this->m_char_index++;
+            $this->m_char_index++;
 
-		$this->m_chr =  substr( $this->m_statement, $this->m_char_index, 1 ) ;
+            $this->m_chr =  substr( $this->m_statement, $this->m_char_index, 1 ) ;
 
-		if ( false ) {
-		   echo "<br>\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
-		   // echo ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
-		   if ( $this->m_chr == '' ) 	    echo "<br>\t\t\t\t\t END OF STRING in statement!";
-		}
+            if ( $this->m_debug_engine > 1 ) {
+            echo "\n\t\t\t\t act chr = '$this->m_chr' index = $this->m_char_index";
+            // echo ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
+            if ( $this->m_chr == '' ) {
+                    echo "\n\t\t\t\t\t END OF STRING in statement!";
+                }
+            }
 
-		return $this->m_chr;
+            return $this->m_chr;
 
 	    } else {
 
@@ -3162,11 +3164,18 @@ TODO: allow dollar sign in table names
       */     
 	
 
-	private function is_ctype_identifier( string $chr ) : bool {
+	private function is_ctype_identifier( $chr ) {
+	
+        // todo use the corresponding identifier checking functions in git PHP cSQL cSQL_class.php
 	
         if ( $chr == '' ) return false;
 
-	    return ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->IsExtraIdentifier( $chr ) || $this->is_ctype_sonderzeichen( $chr ) ) ;
+	    return 
+                ( $chr == '_' ) || 
+                ( ctype_alnum( $chr ) || 
+                $this->IsExtraIdentifier( $chr ) || 
+                $this->is_ctype_sonderzeichen( $chr ) 
+        ) ;
 
 	}	// function is_ctype_identifier( )
 	
@@ -3181,7 +3190,7 @@ TODO: allow dollar sign in table names
       *
       */    	
 	
-	private function is_ctype_sonderzeichen( string $chr ) : bool {
+	private function is_ctype_sonderzeichen( $chr ) {
 	
             return ( strpos ( 'äöüßÄÖÜ', $chr ) !== false );	
 	
@@ -3199,7 +3208,7 @@ TODO: allow dollar sign in table names
       *
       */     	
 
-	private function is_ctype_dbfield( string $chr ) : bool {
+	private function is_ctype_dbfield( $chr ) {
 	    // mit dem Schema und oder Tabellennamen
 	    return ( $chr == '.' ) || ( $chr == '_' ) || ( ctype_alnum( $chr ) || $this->is_ctype_sonderzeichen( $chr )  ) ;
 
@@ -3219,7 +3228,7 @@ TODO: allow dollar sign in table names
       */     
 	
 	
-	private function is_ctype_identifier_start( string $chr ) : bool {
+	private function is_ctype_identifier_start( $chr ) {
 
 	    if ( $chr == '' ) return false;
 
@@ -3241,7 +3250,7 @@ TODO: allow dollar sign in table names
 
 
 
-	private function SkipSpaces( ) : int {
+	private function SkipSpaces( ) {
 
 	// überspringe Leerzeichen ( Leerzeichen, TAB, LF, CRLF )
 
@@ -3285,13 +3294,13 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 
 	
 
-	private function ScanIdentifier( bool $begradigen = false, bool $punkteinlesen = false, bool $scan_for_alias = true  ) : string {
+	private function ScanIdentifier( $begradigen = false, $punkteinlesen = false, $scan_for_alias = true  ) {
 	
         // TODO: scan_for_alias ausprogrammieren!
 
 	    // begradigen meint strtoupper und trim
 
-	    // echo "<br> " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Identifier";
+	    // echo "\n " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Identifier";
 
 	    $id = '';
 
@@ -3341,7 +3350,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 
 	    }
 
-	    // echo "<br> neuer Identifier ->$id<-";
+	    // echo "\n neuer Identifier ->$id<-";
 
 	    if ( $begradigen ) {
             $id = strtoupper( trim( $id ) );
@@ -3362,7 +3371,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       *
       */    	
 
-	private function ScanUntilFolgezeichen( string $zeichen ) : string {
+	private function ScanUntilFolgezeichen( $zeichen ) {
 
 	    $content = '';
 	    
@@ -3389,7 +3398,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 
 
 
-	    // echo "<br> Inhaltbis zum Zeichen '$zeichen' = '$content'";
+	    // echo "\n Inhaltbis zum Zeichen '$zeichen' = '$content'";
 
 	    return $content;
 
@@ -3409,7 +3418,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
 	
 
 
-      private function is_ctype_number_start( string $chr ) : bool {
+      private function is_ctype_number_start( $chr ) {
 
         if ( $chr == '' ) return false;
         return strpos( '+-0123456789.bBxX', $chr ) !== false;
@@ -3428,7 +3437,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       */     
       
 
-      private function is_ctype_number( string $chr ) : bool {
+      private function is_ctype_number( $chr ) {
 
         if ( $chr == '' ) return false;
         return strpos( '0123456789eE.', $chr ) !== false;
@@ -3447,7 +3456,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       */     
 
 
-      private function IsNumberStart( ) : bool {
+      private function IsNumberStart( ) {
 
             // steht eine gewöhnliche Zahl oder eine hexadezimale oder binäre Zahl im Eingabepuffer? ?
             
@@ -3487,7 +3496,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       */     
       
 
-      private function StartsBinary( ) : bool {
+      private function StartsBinary( ) {
 
         return ( ( strtoupper( $this->m_chr ) == 'B' ) && ( ( $this->NextCh( ) == '"' ) || $this->NextCh( ) == "'" || $this->NextCh( ) == "`" ) );
 
@@ -3504,7 +3513,7 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       */     
       
 
-      private function StartsHex( ) : bool {
+      private function StartsHex( ) {
 
         return ( ( strtoupper( $this->m_chr ) == 'X' ) && ( ( $this->NextCh( ) == '"' ) || $this->NextCh( ) == "'" || $this->NextCh( ) == "`" ) );
 
@@ -3522,9 +3531,9 @@ auch TAB, Zeilenvorschub, Carriage Return und Formularvorschub mit ein.
       */     
 
 
-	private function ScanNumber( ) : string {
+	private function ScanNumber( ) {
 
-	    // echo "<br> " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Zahl in ScanNumber( )";
+	    // echo "\n " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Zahl in ScanNumber( )";
 
 	    /*
 
@@ -3631,8 +3640,8 @@ B'01'
 
 	    }
 
-	    if ( false ) {
-            echo "<br> ScanNumber( ) liefert Zahl '$id' an " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';		  ;
+	    if ( $this->m_debug_engine > 0 ) {
+            echo "\n ScanNumber( ) liefert Zahl '$id' an " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';		  ;
             $this->DumpStatementRest( );
             echo "\n $this->m_statement";
 	    }
@@ -3652,12 +3661,12 @@ B'01'
       */     
 
 
-      private function ScanSubQuery( ) : string {
+      private function ScanSubQuery( ) {
 
         // bis zur schließenden Klammer einlesen
         // dabei Stringkonstanten und öfnende Funktionsklammern zählen und überspringen
 
-        // echo "<br> untersuche Subquery-Statement";
+        // echo "\n untersuche Subquery-Statement";
 
         $startpos = $this->m_char_index;
 
@@ -3714,20 +3723,20 @@ B'01'
 
             } else {
 
-            // die ( "<br> ScanSubQuery( ) unknown condition parsing sql subquery statement" . __LINE__  );
+            // die ( "\n ScanSubQuery( ) unknown condition parsing sql subquery statement" . __LINE__  );
             $statement .= $this->m_chr;
             $this->GetCh( );
 
             }
 
             $fertig = ( $klammerebene <= 0 ) || ( $this->m_chr == '' ) || ( $this->m_chr == ';' );
-            // echo "<br> klammerebene = $klammerebene";
+            // echo "\n klammerebene = $klammerebene";
 
 
         }
 
         $statement = substr( $this->m_statement, $startpos, $this->m_char_index - $startpos  );	// abschließende Klammer nicht berücksichtigen
-        // echo "<br> Subquery-Statement abgeschlossen mit '$statement'";
+        // echo "\n Subquery-Statement abgeschlossen mit '$statement'";
 
         return $statement;
 
@@ -3744,9 +3753,9 @@ B'01'
       */     
       
 
-      private function ScanPartitionlist( ) : string {
+      private function ScanPartitionlist( ) {
 
-        // echo "<br> ScanPartitionlist( )";
+        // echo "\n ScanPartitionlist( )";
 
         $list = '';
 
@@ -3768,12 +3777,12 @@ B'01'
             // $list .= ')';
                 $this->GetCh( );
             } else {
-                throw new \Exception( "<br> incomplete PARTITION STATEMENT" );
+                throw new \Exception( "\n incomplete PARTITION STATEMENT" );
             }
 
         }
 
-        // echo "<br> Beende ScanPartitionlist( ) mit $list";
+        // echo "\n Beende ScanPartitionlist( ) mit $list";
 
         return $list;
 
@@ -3790,11 +3799,11 @@ B'01'
       */         
       
 
-      private function ScanOperator( ) : string {
+      private function ScanOperator( ) {
 
 	  // folgt ein Operator?
 
-         // echo "<br> " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Operator in ScanOperator( )";
+         // echo "\n " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Operator in ScanOperator( )";
          
      if ( $this->m_chr == '' ) return '';
 
@@ -3958,7 +3967,7 @@ B'01'
 
 	  if ( ! $found ) $this->RewindTo( $pos );
 
-	  // echo "<br> Beende ScanOperator( ) mit '$operator'   m_chr = '$this->m_chr'";
+	  // echo "\n Beende ScanOperator( ) mit '$operator'   m_chr = '$this->m_chr'";
 
 	  return $operator;
 
@@ -3978,7 +3987,7 @@ B'01'
       */         
       
 
-      private function in_array_icase( $needle, $a_haystack ) : bool {
+      private function in_array_icase( $needle, $a_haystack ) {
 
         for ( $i = 0; $i < count( $a_haystack ); $i++ ) {
 
@@ -4006,7 +4015,7 @@ B'01'
       */         
 
 
-      private function InArray2( $a_needles, $a_haystack, $icase = false ) : bool {
+      private function InArray2( $a_needles, $a_haystack, $icase = false ) {
 
         for ( $i = 0; $i < count( $a_needles ); $i++ ) {
 
@@ -4046,7 +4055,7 @@ B'01'
       
       
       
-      private function ScanCaseStatement( ) : string {
+      private function ScanCaseStatement( ) {
 
       // CASE ALLOWANCE WHEN 0 THEN 'none' WHEN 1 THEN 'read' WHEN 2 THEN 'write' ELSE ALLOWANCE END
 
@@ -4071,9 +4080,9 @@ B'01'
 
       */
 
-	  // echo "<br> ScanCaseStatement( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
+	  // echo "\n ScanCaseStatement( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
 
-// echo "<br> ScanCaseStatement( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
+// echo "\n ScanCaseStatement( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
 
 
 	  // $this->DumpState( );
@@ -4084,12 +4093,12 @@ B'01'
 
 	  $expr .= ' ' . $this->ScanIdentifier( );	// skip "END"
 
-//	  echo "<br> case found condition : " . $expr;
+//	  echo "\n case found condition : " . $expr;
 	  $skipped = $this->SkipSpaces( );
 
 	  $this->m_in_case_statement = false;
 
-// die("<br> Abbruch " . __LINE__ );
+// die("\n Abbruch " . __LINE__ );
 
 	  return $expr;
 
@@ -4108,7 +4117,7 @@ B'01'
       */     
       
 
-      private function IsUnaryOperator( $operator ) : bool {
+      private function IsUnaryOperator( $operator ) {
 
 
 	  return (  $operator == '!'  ||
@@ -4134,7 +4143,7 @@ B'01'
       */     
       
 
-      private function FollowsOperator( ) : bool {
+      private function FollowsOperator( ) {
 
         $pos = $this->m_char_index;
 
@@ -4170,11 +4179,11 @@ B'01'
 
 
 
-      private function ScanConditionalExpression( array $a_stop_tokens = array( ) ) : string {
+      private function ScanConditionalExpression( $a_stop_tokens = array() ) {
 
 	   // x = 15 or t > 8 and not substr( 8 ) or 15
 
-	  // echo "<br> ScanConditionalExpression( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
+	  // echo "\n ScanConditionalExpression( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
 
 	  // $this->DumpState( );
 	  $expr = '';
@@ -4190,20 +4199,20 @@ B'01'
 
 	      /*} elseif ( $this->m_chr == '(') {
 
-		  echo "<br> öffnende Klammer - also keine Suche";
+		  echo "\n öffnende Klammer - also keine Suche";
 	      */
 	      } else {
 		  $token = $this->ScanTableOrFieldName( );
 	      }
 
-	      //  echo "<br> ScanConditionalExpression( ) mit Token '$token' und m_chr = $this->m_chr";
+	      //  echo "\n ScanConditionalExpression( ) mit Token '$token' und m_chr = $this->m_chr";
 
 	      if ( ( ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $token ) ) ||  ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinSyntax( $token ) ) ) &&
 	           ( ! \rstoetter\libsqlphp\cMysql57_Utils::IsIndexHintStart( $token ) ) ){
 
 		  if ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinSyntax( $token ) ) {
 
-			// echo "<br> Join detected in '$token'";
+			// echo "\n Join detected in '$token'";
 
 		      if ( ( strtoupper( $token ) == 'LEFT' ) || ( strtoupper( $token ) == 'RIGHT' ) ) {
 
@@ -4284,8 +4293,8 @@ B'01'
 
 		  } elseif ( $this->m_chr == '(' ) {
 
-		      // echo "<br> ScanConditionalExpression() bei öffnender Klammer mit NextToken() =" . $this->NextToken( );
-		      // echo "<br> token = '$token'";
+		      // echo "\n ScanConditionalExpression() bei öffnender Klammer mit NextToken() =" . $this->NextToken( );
+		      // echo "\n token = '$token'";
 
 		      $expr .= '(';
 		      $this->GetCh( );
@@ -4324,9 +4333,9 @@ B'01'
 
 		      if ( ( $token == '' && ( $this->m_chr == '' || $this->m_chr == ';' ) ) ) {
 			  $fertig = true;
-			  // echo "<br> fertig weil am Ende angelangt";
+			  // echo "\n fertig weil am Ende angelangt";
 		      } else {
-			  // echo "<br>ScanConditionalExpression( )-> Token = '$token' und m_chr = '$this->m_chr'";
+			  // echo "\nScanConditionalExpression( )-> Token = '$token' und m_chr = '$this->m_chr'";
 			  $expr .= ' ' . $token . ' ';
 			  if ( ( $skipped ) || ( $this->SkipSpaces( ) ) ) $expr .= ' ';
 
@@ -4339,12 +4348,12 @@ B'01'
 
 	  }	// while
 
- 	  if ( false ) {
-	      echo "<br> ScanConditionalExpression( ) liefert --[$expr]-- bei statement = '$this->m_statement'";
-	      echo "<br> ScanConditionalExpression( ) Klammerung = $klammer_ebene";
+ 	  if ( $this->m_debug_engine > 0 ) {
+	      echo "\n ScanConditionalExpression( ) liefert --[$expr]-- bei statement = '$this->m_statement'";
+	      echo "\n ScanConditionalExpression( ) Klammerung = $klammer_ebene";
 	  }
 
-	  // echo "<br> ScanConditionalExpression() endet mit token = '$token'";
+	  // echo "\n ScanConditionalExpression() endet mit token = '$token'";
 
 	  if ( $this->m_in_where ) {
 
@@ -4355,10 +4364,10 @@ B'01'
 	  if ( $klammer_ebene > 0 ) {
 	      $this->DumpState( );
 	      // $this->Dump( );
-	      throw new \Exception("<br> Fehler: ScanConditionalExpression() mit Klammerung $klammer_ebene und m_chr = '$this->m_chr' und token = '$token'");
+	      throw new \Exception("\n Fehler: ScanConditionalExpression() mit Klammerung $klammer_ebene und m_chr = '$this->m_chr' und token = '$token'");
 	  }
 
-// die( "<br> Abbruch: ScanConditionalExpression leaving with '$expr'");
+// die( "\n Abbruch: ScanConditionalExpression leaving with '$expr'");
 
 
 	  return $expr;
@@ -4377,13 +4386,13 @@ B'01'
       */         
 
 
-      private function ScanJoinCondition( string $prevtoken ) : string {
+      private function ScanJoinCondition( $prevtoken ) {
 
 	// join_condition:
 	// ON conditional_expr
 	// | USING (column_list)
 
-	  // echo "<br> ScanJoinCondition( )";
+	  // echo "\n ScanJoinCondition( )";
 
 	  $cond = '';
 
@@ -4403,7 +4412,7 @@ B'01'
 
 	  }
 
-	  // echo "<br> beende ScanJoinCondition( ) mit $cond";
+	  // echo "\n beende ScanJoinCondition( ) mit $cond";
 
 	  return $cond;
 
@@ -4420,64 +4429,69 @@ B'01'
       */         
       
 
-      private function ScanTableOrFieldName( ) : string {
+      private function ScanTableOrFieldName( ) {
 
-	  // kann mit ' oder " oder ` beginnen
-	  // kann einen Punkt enthalten -> tablenem.fieldname oder schemaname.tablename.fieldname oder schemaname.tablename
+            // kann mit ' oder " oder ` beginnen
+            // kann einen Punkt enthalten -> tablenem.fieldname oder schemaname.tablename.fieldname oder schemaname.tablename
 
-	  $skipped = 0;
-	  $id = '';
+            $skipped = 0;
+            $id = '';
 
-	  // echo "<br> ScanTableOrFieldName( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
+            // echo "\n ScanTableOrFieldName( ) " . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';;
 
-	  $this->SkipSpaces( ) ;
+            $this->SkipSpaces( ) ;
 
-	  $suffix = '';
-	  if ( $this->m_chr == '"' ) {
-	      $suffix = '"';
-	      $this->GetCh();
-	  } elseif ( $this->m_chr == "'" ) {
-	      $suffix = "'";
-	      $this->GetCh();
-	  } elseif ( $this->m_chr == '`' ) {
-	      $suffix = '`';
-	      $this->GetCh();
-	  }
+            $suffix = '';
+            if ( $this->m_chr == '"' ) {
+                $suffix = '"';
+                $this->GetCh();
+            } elseif ( $this->m_chr == "'" ) {
+                $suffix = "'";
+                $this->GetCh();
+            } elseif ( $this->m_chr == '`' ) {
+                $suffix = '`';
+                $this->GetCh();
+            }
 
-	  // $this->SkipSpaces( );
+            // $this->SkipSpaces( );
 
-	  if ( strlen( $suffix) ) {
-	    $id .= $this->ScanUntilFolgezeichen( $suffix );
-//   	    $this->GetCh( );
-  	    $id = $suffix . $id ;
+            if ( strlen( $suffix) ) {
+                $id .= $this->ScanUntilFolgezeichen( $suffix );
+        //   	    $this->GetCh( );
+                $id = $suffix . $id ;
 
-	  } else {
+            } else {
 
-	    // ScanIdentifier( $begradigen = false, $punkteinlesen = false
-// 	    $id .= $this->ScanIdentifier( false, true );
-	    $id .= $this->ScanIdentifier( false, false );
+                // ScanIdentifier( $begradigen = false, $punkteinlesen = false
+        // 	    $id .= $this->ScanIdentifier( false, true );
+                $id .= $this->ScanIdentifier( false, false );
 
-	  }
+            }
 
-	  $skipped += $this->SkipSpaces( );
+            $skipped += $this->SkipSpaces( );
 
-	  if ( $this->m_chr == '.' ) {
-	      $id .= '.';
-	      $this->GetCh( );
-	      $id .= $this->ScanTableOrFieldName( );
-	      $skipped += $this->SkipSpaces( );
-	  } else {
+            if ( $this->m_chr == '.' ) {
+                $id .= '.';
+                $this->GetCh( );
+                $id .= $this->ScanTableOrFieldName( );
+                $skipped += $this->SkipSpaces( );
+            } else {
 
-	      for ( $i = 0; $i < $skipped; $i ++ ) { $this->UngetCh( ); }
+                for ( $i = 0; $i < $skipped; $i ++ ) { 
+                        $this->UngetCh( ); 
+                    }
 
-	  }
+            }
 
-// 	  $ret = $suffix . $id . $suffix;
+        // 	  $ret = $suffix . $id . $suffix;
 
-// 	  assert( strlen( $id ) );
+        // 	  assert( strlen( $id ) );
 
-	  // echo "<br> ScanTableOrFieldName( ) liefert ->'$id' m_chr = $this->m_chr<br>";
-	  return $id;
+            if ( $this->m_debug_engine > 0 ) {
+                    echo "\n cSqlStatement::ScanTableOrFieldName( ) liefert ->'$id' m_chr = $this->m_chr\n";
+            }
+            
+            return $id;
 
 
       }	// function ScanTableOrFieldName
@@ -4493,7 +4507,7 @@ B'01'
       */         
       
 
-      private function ScanIndexHint( ) : string {
+      private function ScanIndexHint( ) {
 
       // index_hint:
       // USE {INDEX|KEY}
@@ -4503,7 +4517,7 @@ B'01'
       // | FORCE {INDEX|KEY}
       //	[FOR {JOIN|ORDER BY|GROUP BY}] (index_list)
 
-	  // echo "<br> ScanIndexHint";
+	  // echo "\n ScanIndexHint";
 
 	  $hint = '';
 
@@ -4565,13 +4579,13 @@ B'01'
 
 	      } else {
 
-		  die( "<br> error in index hint (use, force, ignore erwartet)" );
+		  die( "\n error in index hint (use, force, ignore erwartet)" );
 
 	      }
 
 	  }
 
-	  // echo "<br> ScanIndexHint liefert $hint";
+	  // echo "\n ScanIndexHint liefert $hint";
 
 	  return $hint;
 
@@ -4589,12 +4603,12 @@ B'01'
       */         
       
       
-      private function ScanIndexHintList( ) : string {
+      private function ScanIndexHintList( ) {
 
         // index_hint_list:
         // index_hint [, index_hint] ...
 
-        // echo "<br> ScanIndexHintList";
+        // echo "\n ScanIndexHintList";
 
         $this->SkipSpaces( );
 
@@ -4624,13 +4638,13 @@ B'01'
             }
 
 
-            if  ($this->m_chr == '' ) throw new \Exception("<br> error: incomplete index hint list");
+            if  ($this->m_chr == '' ) throw new \Exception("\n error: incomplete index hint list");
 
             }
 
         }
 
-        // echo "<br> ScanIndexHintList liefert->$list";
+        // echo "\n ScanIndexHintList liefert->$list";
 
         return $list;
 
@@ -4648,7 +4662,7 @@ B'01'
       private function DumpStatementAbgearbeitet( ) {
 
         $pos = $this->m_char_index - 1;
-        echo "<br> Bearbeiteter Teil vom Statement bis Position {$pos} -><br>" . substr( $this->m_statement, 0, $this->m_char_index - 1 );
+        echo "\n Bearbeiteter Teil vom Statement bis Position {$pos} ->\n" . substr( $this->m_statement, 0, $this->m_char_index - 1 );
         echo ' ( ' . debug_backtrace()[1]['function'] . ' )';
 
       }	// function DumpStatementAbgearbeitet( )
@@ -4666,10 +4680,10 @@ B'01'
 
         $pos = $this->m_char_index ;
 
-        echo "<br><h5> Starte DumpStatementRest()</h5>" . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')' ;
+        echo "\n<h5> Starte DumpStatementRest()</h5>" . ' (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')' ;
 
 
-        echo "<br> Unbearbeiteter Rest vom Statement ab Position {$pos} -><br>'" . substr( $this->m_statement, $this->m_char_index ) . "'";
+        echo "\n Unbearbeiteter Rest vom Statement ab Position {$pos} ->\n'" . substr( $this->m_statement, $this->m_char_index ) . "'";
         echo ' ( ' . debug_backtrace()[1]['function'] . ' )';
 
       }	// function DumpStatementRest( )
@@ -4687,7 +4701,7 @@ B'01'
       */         
       
       
-      static public function StringFoundIn( string $cmp ) : bool {
+      static public function StringFoundIn( $cmp ) {
 
         // die Zeichenkette $cmp in den auf $cmp folgenden Paramtern suchen
 
@@ -4716,11 +4730,11 @@ B'01'
       *
       */   
       
-    private function ScanTableSpecification( ) : string {
+    private function ScanTableSpecification( ) {
 
             
 
-            // echo "<br> ScanTableSpecification( ) " . debug_backtrace()[1]['function'] . '/' .  debug_backtrace()[1]['line'];
+            // echo "\n ScanTableSpecification( ) " . debug_backtrace()[1]['function'] . '/' .  debug_backtrace()[1]['line'];
             $specification = '';
             $factor = '';
 
@@ -4731,14 +4745,14 @@ B'01'
 
             if ( strtoupper( $name ) == 'FROM' ) {
 
-                // echo "<br> ScanTableSpecification eliminiert einleitendes FROM";
+                // echo "\n ScanTableSpecification eliminiert einleitendes FROM";
 
                 $name = $this->ScanTableOrFieldName( ) ;
                 $specification = $name;
 
             }
 
-            // echo "<br> ScanTableSpecification( ) startet mit '$name'";
+            // echo "\n ScanTableSpecification( ) startet mit '$name'";
 
             if ( $this->SkipSpaces( ) )  $specification .= ' ';
 
@@ -4767,10 +4781,10 @@ B'01'
             //	ein Komma
             // ein ''
 
-            //  echo "<br> ScanTableSpecification( ) ohne PARTITION - id_next = '$id_next' und specification = '$specification'";
+            //  echo "\n ScanTableSpecification( ) ohne PARTITION - id_next = '$id_next' und specification = '$specification'";
 
             if ( ( $this->NextCh( ) == ',' ) || ( $this->NextCh( ) == '' ) ) {
-                //  echo "<br> ScanTableSpecification( ) mit Komma liefert '$specification";
+                //  echo "\n ScanTableSpecification( ) mit Komma liefert '$specification";
                 return $specification;
 
             }
@@ -4793,7 +4807,7 @@ B'01'
 
             }
 
-            //  echo "<br> ScanTableSpecification() liefert ->$specification";
+            //  echo "\n ScanTableSpecification() liefert ->$specification";
 
             return $specification;
 
@@ -4813,7 +4827,7 @@ B'01'
 
       protected function DumpState( ) {
 
-        echo "<br> m_chr = '$this->m_chr' und id_next = " . $this->NextIdentifier( );
+        echo "\n m_chr = '$this->m_chr' und id_next = " . $this->NextIdentifier( );
 
       }	// function DumpState( );
       
@@ -4833,10 +4847,10 @@ B'01'
       */         
 
 
-      private function ScanTableFactor( ) : string {
+      private function ScanTableFactor( ) {
 
 
-	  // echo "<br> ScanTableFactor( )";
+	  // echo "\n ScanTableFactor( )";
 
 	  $factor = '';
 	  $id = '';
@@ -4919,7 +4933,7 @@ B'01'
 
 	  $factor = trim( $factor );
 
-	  //  echo "<br> ScanTableFactor( ) liefert ->$factor<-- an " . debug_backtrace()[1]['function'];;
+	  //  echo "\n ScanTableFactor( ) liefert ->$factor<-- an " . debug_backtrace()[1]['function'];;
 	  return $factor;
 
       }	// function ScanTableFactor( )
@@ -4934,7 +4948,7 @@ B'01'
       *
       */         
 
-      protected function ScanAlias( ) : string {
+      protected function ScanAlias( ) {
 
         $ret = '';
 
@@ -4990,7 +5004,7 @@ B'01'
       */   
 
 
-      private function ScanJoinTable( bool $scanfortablename = true ) : string {
+      private function ScanJoinTable( $scanfortablename = true ) {
 
 
         // Zustand: wenn Rekursionstiefe 1, dann erhält ScanJoinTable( ) den gesamten Join
@@ -5005,7 +5019,7 @@ B'01'
 
             $level++;
 
-            //  echo "<br> ScanJoinTable( ) - Aufruf von " . debug_backtrace()[1]['function'];
+            //  echo "\n ScanJoinTable( ) - Aufruf von " . debug_backtrace()[1]['function'];
 
             $this->m_in_join = true;
 
@@ -5045,62 +5059,76 @@ B'01'
                 $id = trim( $id );
 
                 if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
-                $fertig = true;
+                    $fertig = true;
                 }
 
 
                 if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $id ) ) {
-                for ( $i = 0; $i < strlen( $id ); $i ++ ) $this->UnGetCh( );
-                $fertig = true;
+                    for ( $i = 0; $i < strlen( $id ); $i ++ ) {
+                        $this->UnGetCh( );
+                    }
+                    $fertig = true;
 
                 } elseif ( $this->m_chr == '' ) {
 
-                $fertig = true;
+                    $fertig = true;
 
                 } elseif ( $this->m_chr == '(' ) {
 
-                $klammer_ebene++;
-                $this->GetCh( );		// skip '('
-                $this->SkipSpaces( );
+                    $klammer_ebene++;
+                    $this->GetCh( );		// skip '('
+                    $this->SkipSpaces( );
 
                 } elseif ( $this->m_chr == ')' ) {
 
-                $klammer_ebene--;
-                $this->GetCh( );		// skip ')'
-                $this->SkipSpaces( );
-
-                if ( $id == '' ) {
-
-                    $last_id = $id;
+                    $klammer_ebene--;
+                    $this->GetCh( );		// skip ')'
                     $this->SkipSpaces( );
-                    $id = $this->ScanIdentifier( true );	// skip 'JOIN'
 
-                }
+                    if ( $id == '' ) {
 
-                echo "<br> id = '$id' und ')' gefunden ";
+                        $last_id = $id;
+                        $this->SkipSpaces( );
+                        $id = $this->ScanIdentifier( true );	// skip 'JOIN'
 
-                } elseif ( ( $id == 'ON' ) || ( $id == 'USING' ) ) {
+                    }
+                    
+                    if ( $this->m_debug_engine >= 0 ) {
+                        echo "\n id = '{$id}' und ')' gefunden ";
+                    }
+
+
+                } elseif ( 
+                    ( $id == 'ON' ) || 
+                    ( $id == 'USING' ) 
+                ) {
 
 
 
                     $this->SkipSpaces( );
+                    
                     if ( $id == 'USING' ) {
-                    $this->ScanColumnList( );
+                        $this->ScanColumnList( );
                     } else {
-                    // $this->ScanJoinCondition( $id );
+                        // $this->ScanJoinCondition( $id );
 
-                    $expr = $this->ScanConditionalExpression( );
+                        $expr = $this->ScanConditionalExpression( );
 
                     }
 
-                } elseif ( ( $id == 'INNER' ) || ( $id == 'CROSS' ) ) {
+                } elseif ( 
+                    ( $id == 'INNER' ) || 
+                    ( $id == 'CROSS' ) 
+                ) {
 
                 $join .= $id . ' ';
 
                 $last_id = $id;
                 $this->SkipSpaces( );
                 $id = $this->ScanIdentifier( true );	// skip 'JOIN'
-                if ( $this->SkipSpaces( ) ) $join .= ' ';
+                if ( $this->SkipSpaces( ) ) {
+                    $join .= ' ';
+                }
 
                 $join .= $id . ' ';
 
@@ -5112,17 +5140,19 @@ B'01'
                 $this->SkipSpaces( );
 
                 $join .= $factor . ' ';
-                if ( $this->SkipSpaces( ) ) $join .= ' ';
+                if ( $this->SkipSpaces( ) ) {
+                    $join .= ' ';
+                }
 
                 $last_id = $id;
                 $id = $this->ScanIdentifier( true );
                 if ( $id == 'USING' || ( $id == 'ON' ) ) {
 
                     if ( $id == 'USING' ) {
-                    $this->ScanColumnList( );
+                        $this->ScanColumnList( );
                     } else {
                     // $this->ScanJoinCondition( $id );
-                    $this->ScanConditionalExpression( );
+                        $this->ScanConditionalExpression( );
                     }
 
                 } else {
@@ -5142,17 +5172,19 @@ B'01'
 
                         if ( $id == 'USING' ) {
 
-                        $this->ScanColumnList( );
+                            $this->ScanColumnList( );
 
                         } else {
 
-                        $this->ScanConditionalExpression( );
+                            $this->ScanConditionalExpression( );
 
                         }
 
                     } else {
 
-                        for ( $i = 0; $i < strlen( $id ); $i ++ ) $this->UnGetCh( );
+                        for ( $i = 0; $i < strlen( $id ); $i ++ ) {
+                            $this->UnGetCh( );
+                        }
 
                         $factor = $this->ScanTableFactor( );
 
@@ -5165,7 +5197,7 @@ B'01'
                         $last_id = $id;	// ???
                         $token = $this->ScanIdentifier( true );
                         if ( $token == 'ON' ){
-                        $this->ScanConditionalExpression( );
+                            $this->ScanConditionalExpression( );
                         }
 
 
@@ -5189,7 +5221,10 @@ B'01'
                 $this->SkipSpaces( );
                 $id = $this->ScanIdentifier( true );
 
-                } elseif ( ( $id == 'LEFT' ) || ( $id == 'RIGHT' ) ) {
+                } elseif ( 
+                    ( $id == 'LEFT' ) || 
+                    ( $id == 'RIGHT' ) 
+                ) {
 
                     $last_id = $id;
                     $this->SkipSpaces( );
@@ -5241,7 +5276,10 @@ B'01'
                     $this->SkipSpaces( );
                     $id = $this->ScanIdentifier( true );	// skip 'NATURAL'
 
-                    if ( $id == 'LEFT' || $id == 'RIGHT'  ) {
+                    if ( 
+                            $id == 'LEFT' || 
+                            $id == 'RIGHT'   
+                    ) {
 
                         $last_id = $id;
                         $this->SkipSpaces( );
@@ -5270,7 +5308,11 @@ B'01'
                     $this->SkipSpaces( );
                     $id = $this->ScanIdentifier( );
 
-                } elseif ( ( $id == 'USE' ) || ( $id == 'IGNORE' ) || ( $id == 'FORCE' ) ) {
+                } elseif ( 
+                            ( $id == 'USE' ) || 
+                            ( $id == 'IGNORE' ) || 
+                            ( $id == 'FORCE' ) 
+                ) {
 
                     $last_id = $id;
                     $id = $this->ScanIndexHintList( $id );
@@ -5278,28 +5320,33 @@ B'01'
                 } elseif ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $id ) ) ) {
 
                     $fertig = true;
-                    for ( $i = 0; $i < strlen( $id ); $i++ ) { $this->UnGetCh( ); }
+                    for ( $i = 0; $i < strlen( $id ); $i++ ) { 
+                        $this->UnGetCh( ); 
+                    }
 
                 } else {
 
-                $this->SkipSpaces( );
+                    $this->SkipSpaces( );
 
-                if ( ( ( $klammer_ebene == 0 ) && ( $id == '') ) &&
-                    ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() )) )
-                    $fertig = true;
+                    if ( 
+                            ( ( $klammer_ebene == 0 ) && 
+                            ( $id == '') ) &&
+                            ! \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() )) 
+                    ) {
+                        $fertig = true;
+                    }
 
 
                 }
 
                 if ( $id == '' ) {
-
-                $this->SkipSpaces( );
-                $id = $this->ScanIdentifier( );
+                    $this->SkipSpaces( );
+                    $id = $this->ScanIdentifier( );
                 }
 
                     if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
-                    $fertig = true;
-                        echo "<br> clause start gefunden, gehe zurück zur aufrufenden Funktion " . debug_backtrace()[1]['function'];;
+                        $fertig = true;
+                        echo "\n clause start gefunden, gehe zurück zur aufrufenden Funktion " . debug_backtrace()[1]['function'];;
 
                     }
 
@@ -5307,11 +5354,15 @@ B'01'
 
             $ret = substr( $this->m_statement, $pos_start, $this->m_char_index - $pos_start );
 
-            if ($this->m_debug_engine >= 0 ) echo "<br> ScanJoinTable( ) liefert '$ret' an " . debug_backtrace()[1]['function'];
+            if ( $this->m_debug_engine >= 0 ) {
+                echo "\n ScanJoinTable( ) liefert '$ret' an " . debug_backtrace()[1]['function'];
+            }
 
 
             $level--;
-            if ( $level == 0 ) $this->m_in_join = false;
+            if ( $level == 0 ) {
+                $this->m_in_join = false;
+            }
 
             return $ret;
 
@@ -5346,33 +5397,38 @@ B'01'
       *
       */         
       
-      private function FollowsJoin( ) : bool {
+      private function FollowsJoin( ) {
 
 
-        // Was folgt nun in der Tabellenreferenz?
+            // Was folgt nun in der Tabellenreferenz?
 
-        $reference = '';
-        $position = 0;
+            $reference = '';
+            $position = 0;
 
-        $position = $this->m_char_index;
+            $position = $this->m_char_index;
 
-        $reference .= $this->ScanTableFactor( );
+            $reference .= $this->ScanTableFactor( );
 
-        if ( ( $reference == '' ) && ( $this->m_chr != '' ) ) {
-            echo "<br> FollowsJoin( ) Join detected!";
-            return true;
-        }
+            if ( ( $reference == '' ) && ( $this->m_chr != '' ) ) {
+                echo "\n FollowsJoin( ) Join detected!";
+                return true;
+            }
 
 
-        $this->SkipSpaces( );
-        $name = $this->ScanTableOrFieldName( );
+            $this->SkipSpaces( );
+            $name = $this->ScanTableOrFieldName( );
 
-        $this->RewindTo( $position );
+            $this->RewindTo( $position );
 
-        $ret = \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $name ) ) || ( strtoupper( $name ) == 'ON'  );
-        //  echo "<br> FollowsJoin( ) liefert " . ( $ret ? 'true' : 'false' ) ;
+            $ret = (
+                    \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( 
+                        strtoupper( $name ) 
+                    ) || 
+                    ( strtoupper( $name ) == 'ON'  )
+            );
+            //  echo "\n FollowsJoin( ) liefert " . ( $ret ? 'true' : 'false' ) ;
 
-        return $ret;
+            return $ret;
 
       }	// function FollowsJoin( )
       
@@ -5387,16 +5443,16 @@ B'01'
       */         
       
 
-      private function NextToken( ) : string {
+      private function NextToken( ) {
 
-        $pos = $this->m_char_index;
+            $pos = $this->m_char_index;
 
-        $this->SkipSpaces( );
-        $ret = $this->ScanTableOrFieldName( );
+            $this->SkipSpaces( );
+            $ret = $this->ScanTableOrFieldName( );
 
-        $this->RewindTo( $pos );
+            $this->RewindTo( $pos );
 
-        return $ret;
+            return $ret;
 
       }	// function NextToken( )
       
@@ -5419,11 +5475,11 @@ B'01'
       */   
 
       
-      private function ScanTableReference( bool $check_join = true ) : string {
+      private function ScanTableReference( $check_join = true ) {
 
 
 
-	  //  echo "<br> ScanTableReference( ) startet mit \"" . $this->m_chr . '" (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
+	  //  echo "\n ScanTableReference( ) startet mit \"" . $this->m_chr . '" (' . debug_backtrace()[1]['function'] . ' /' . debug_backtrace()[0]['line'] . ')';
 
 	  $follows_join = false;
 	  $reference = '';
@@ -5431,104 +5487,112 @@ B'01'
 	  $name = '';
 
 
-	 if ( !$this->m_in_join ) $follows_join = $this->FollowsJoin( );
+	 if ( !$this->m_in_join ) {
+        $follows_join = $this->FollowsJoin( );
+    }
 
-	  if ( $this->SkipSpaces( ) ) $reference .= ' ';
+	  if ( $this->SkipSpaces( ) ) { 
+        $reference .= ' '; 
+    }
 
 	  $fertig = false;
 	  while( ! $fertig ) {
 
 	      if ( $this->m_chr == ';' ) {
 
-		  $fertig = true;
+            $fertig = true;
 
 	      } elseif ( $this->m_chr != ',' ) {
 
-		  if ( $follows_join ) {
-		      //  echo "<br> ScanTableReference( ) erwarte JOIN";
-		      $xpos = $this->m_char_index;
-		      $join = $this->ScanJoinTable( );
-		      $this->m_a_joins[]= $join;
-		      $reference .= $join;
+            if ( $follows_join ) {
+                //  echo "\n ScanTableReference( ) erwarte JOIN";
+                $xpos = $this->m_char_index;
+                $join = $this->ScanJoinTable( );
+                $this->m_a_joins[]= $join;
+                $reference .= $join;
 
 
-		  } elseif ( $this->m_chr == '' ) {
+            } elseif ( $this->m_chr == '' ) {
 
-		      echo $references;
-		      $fertig = true;
+                echo $references;
+                $fertig = true;
 
-		  }  else {
+            }  else {
 
-// 		    $this->RewindTo( $pos_start  );
-
-
-		    // echo "<br> ScanTableReference erwarte Table Factor";
-
-		    $xpos = $this->m_char_index;
-		    $factor = $this->ScanTableFactor( );	// da steht jetzt alles drin in $name
-			$fertig = true;
-			$reference .= $factor;
-
-		    if ( ( ! $this->m_in_join) && ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() ) ) ) ) {
-
-			$name .= $this->ScanJoinTable( false );
-
-		    }
-		    if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $name ) ) ) {
-			$fertig = true;
-
-// 			for ( $i = 0; $i < strlen( $name ); $i++ ) { $this->UnGetCh( ); }
-// 			$name = '';
-			$this->RewindTo( $xpos );
-
-		    }
+    // 		    $this->RewindTo( $pos_start  );
 
 
+                // echo "\n ScanTableReference erwarte Table Factor";
 
-		    if ( ! $fertig ) $reference .= $name;
+                $xpos = $this->m_char_index;
+                $factor = $this->ScanTableFactor( );	// da steht jetzt alles drin in $name
+                $fertig = true;
+                $reference .= $factor;
 
-		    if ( ! $fertig ) {
-			if ( ! strlen( $name ) ){
+                if ( 
+                    ( ! $this->m_in_join) && 
+                    ( \rstoetter\libsqlphp\cMysql57_Utils::IsJoinStart( strtoupper( $this->NextToken() ) ) ) 
+                ) {
 
-			    $this->DumpStatementAbgearbeitet( );
-			    die("<br> Abbruch: ScanTableReference() bekommt leere Zeichenkette von ScanTableFactor() - reference = '$reference'");
-			}
-		    }
+                    $name .= $this->ScanJoinTable( false );
 
-		  }
+                }
+                if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $name ) ) ) {
+                    $fertig = true;
 
-		  if ( ! $fertig ) if ( $this->SkipSpaces( ) ) $reference .= ' ';
+        // 			for ( $i = 0; $i < strlen( $name ); $i++ ) { $this->UnGetCh( ); }
+        // 			$name = '';
+                    $this->RewindTo( $xpos );
+
+                }
+
+
+
+                if ( ! $fertig ) {
+                    $reference .= $name;
+                }
+
+                if ( ! $fertig ) {
+                    if ( ! strlen( $name ) ){
+                        $this->DumpStatementAbgearbeitet( );
+                        die("\n Abbruch: ScanTableReference() bekommt leere Zeichenkette von ScanTableFactor() - reference = '$reference'");
+                    }
+                }
+
+            }
+
+            if ( ! $fertig ) { 
+                if ( $this->SkipSpaces( ) ) {
+                    $reference .= ' '; 
+                }
+            }
 
 	      } else {
 
-		  // echo "<br> übernehme Name '$name'";
+                // echo "\n übernehme Name '$name'";
 
-		  if ( $this->m_chr == ',' ) {
+                if ( $this->m_chr == ',' ) {
 
-		      $fertig = true;
+                    $fertig = true;
 
-		      // $reference .
-		      // $this->GetCh( );
+                    // $reference .
+                    // $this->GetCh( );
 
-		      // $pos_start = $this->m_char_index;
+                    // $pos_start = $this->m_char_index;
 
-		      // $name = $this->ScanTableOrFieldName( );
-		      // if ( $this->SkipSpaces( ) ) $gemerkt .= ' ';
+                    // $name = $this->ScanTableOrFieldName( );
+                    // if ( $this->SkipSpaces( ) ) $gemerkt .= ' ';
 
-		  } else {
-		    die ( "Unknown disposition - chr = '$this->m_chr'" );
-		  }
+                } else {
+                    die ( "Unknown disposition - chr = '$this->m_chr'" );
+                }
 
 	      }
 
 
 	      if ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( $this->NextToken( ) ) ) {
 
-		  $fertig = true;
-
-// 			for ( $i = 0; $i < strlen( $name ); $i++ ) { $this->UnGetCh( ); }
-// 			$name = '';
-//  			$this->RewindTo( $xpos );
+                $fertig = true;
 
 	      }
 
@@ -5536,7 +5600,7 @@ B'01'
 
 	      if ( $this->m_chr == '' || $this->m_chr == ';' ) {
 
-		  $fertig = true;
+                $fertig = true;
 
 	      }
 
@@ -5544,7 +5608,7 @@ B'01'
 
 	  }	// while
 
-	  //  echo "<br> ScanTableReference liefert ->$reference";
+	  //  echo "\n ScanTableReference liefert ->$reference";
 
 	  return trim( $reference );
 
@@ -5568,79 +5632,87 @@ B'01'
       
       
       
-      private function ScanEscapedTableReference( ) : string {
+      private function ScanEscapedTableReference( ) {
 
 
- 	    //  echo "<br> ScanEscapedTableReference( )";
+ 	    //  echo "\n ScanEscapedTableReference( )";
 
 	    $reference = '';
 
-	    if ( $this->SkipSpaces( ) ) $reference .= ' ';
+	    if ( $this->SkipSpaces( ) ) {
+            $reference .= ' ';
+        }
 
 	    $fertig = false;
 
-	    if ( $this->SkipSpaces( ) ) $reference .= ' ';
+	    if ( $this->SkipSpaces( ) ) {
+            $reference .= ' ';
+        }
 
-	    if ( ( $this->m_chr == '' ) || ( $this->m_chr == ';' ) ) {
+	    if ( 
+            ( $this->m_chr == '' ) || 
+            ( $this->m_chr == ';' ) 
+	    ) {
 
-		 echo '<br>' . substr( $this->m_statement,  $this->m_char_index - 20 , 70);
-		 die( "<br>ScanEscapedTableReference: string ends inmidst the escaped table reference" );
+            echo '\n' . substr( $this->m_statement,  $this->m_char_index - 20 , 70);
+            die( "\nScanEscapedTableReference: string ends inmidst the escaped table reference" );
 
 	    }  elseif ( $this->m_chr == '{' ) {		// new version: analyzer
 
-		$reference .= ' {';			// ODBC-Join
-		$this->GetCh( );			// skip '{'
-		$this->m_in_curly_braces = true;
-		$this->SkipSpaces( );
-		$id = $this->ScanIdentifier( );
-		assert( strtoupper( $id ) == 'OJ' );
-		$reference .= ' OJ ';
-		$reference .= $this->ScanTableReference( );
+            $reference .= ' {';			// ODBC-Join
+            $this->GetCh( );			// skip '{'
+            $this->m_in_curly_braces = true;
+            $this->SkipSpaces( );
+            $id = $this->ScanIdentifier( );
+            assert( strtoupper( $id ) == 'OJ' );
+            $reference .= ' OJ ';
+            $reference .= $this->ScanTableReference( );
 
-		$this->SkipSpaces( );
+            $this->SkipSpaces( );
 
 
 
-// 		$reference .= '}';
-// 		$this->GetCh( );
-		if ( $this->SkipSpaces( ) ) $reference .= ' ';
-		assert( $this->m_chr == '}'  );
-		$this->GetCh( );
-		$reference .= '}';
-		$this->m_in_curly_braces = false;
-		$this->m_a_joins[ count( $this->m_a_joins ) - 1  ] = $reference;
+    // 		$reference .= '}';
+    // 		$this->GetCh( );
+            if ( $this->SkipSpaces( ) ) $reference .= ' ';
+            assert( $this->m_chr == '}'  );
+            $this->GetCh( );
+            $reference .= '}';
+            $this->m_in_curly_braces = false;
+            $this->m_a_joins[ count( $this->m_a_joins ) - 1  ] = $reference;
 
 	    } elseif ( $this->m_chr == '{' ) {	// old version: scan until ending }`
 
-		$reference .= ' {';			// ODBC-Join TODO
-		$this->GetCh( );			// skip '{'
-		$this->m_in_curly_braces = true;
-		$reference .= $this->ScanUntilFolgezeichen('}');
-		$this->m_in_curly_braces = false;
-		$this->m_a_joins[] = $reference;
-// 		$reference .= '}';
-// 		$this->GetCh( );
-		if ( $this->SkipSpaces( ) ) $reference .= ' ';
+            $reference .= ' {';			// ODBC-Join TODO
+            $this->GetCh( );			// skip '{'
+            $this->m_in_curly_braces = true;
+            $reference .= $this->ScanUntilFolgezeichen('}');
+            $this->m_in_curly_braces = false;
+            $this->m_a_joins[] = $reference;
+            
+            if ( $this->SkipSpaces( ) ) {
+                $reference .= ' ';
+            }
 
 
 
 	    } elseif ( $this->m_chr == ',' ) {
 
-		  $fertig = true;
-		  $reference .= ',';
+            $fertig = true;
+            $reference .= ',';
 
 	    } else {
 
-		if ( !( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $this->NextToken( ) ) ) ) ) {
+            if ( !( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( $this->NextToken( ) ) ) ) ) {
 
-		    $ref = $this->ScanTableReference( );
-		    $reference .= $ref;
-		} else {
-		}
+                $ref = $this->ScanTableReference( );
+                $reference .= $ref;
+                
+            } 
 
 	    }
 
-	    //  echo "<br> ScanEscapedTableReference liefert ->$reference";
+	    //  echo "\n ScanEscapedTableReference liefert ->$reference";
 
 	    return $reference;
 
@@ -5659,24 +5731,24 @@ B'01'
       */   
       
 
-      protected function FollowsSubquery( ) : bool {
+      protected function FollowsSubquery( ) {
 
-	  $ret = false;
-	  $pos = $this->m_char_index;
+            $ret = false;
+            $pos = $this->m_char_index;
 
-	  $this->SkipSpaces( );
+            $this->SkipSpaces( );
 
-	  if ( $this->m_chr == '(' ) {
+            if ( $this->m_chr == '(' ) {
 
-	      $this->GetCh( );
-	      $this->SkipSpaces( );
-	      $ret = ( strtoupper( $this->NextToken( ) ) == 'SELECT' );
+                $this->GetCh( );
+                $this->SkipSpaces( );
+                $ret = ( strtoupper( $this->NextToken( ) ) == 'SELECT' );
 
-	  }
+            }
 
-	  $this->RewindTo( $pos );
+            $this->RewindTo( $pos );
 
-	  return $ret;
+            return $ret;
 
 
       }	// function FollowsSubquery( )
@@ -5696,10 +5768,10 @@ B'01'
       */         
 
 
-	private function ScanTableReferences( ) : string {
+	private function ScanTableReferences( ) {
 
 
-	    //  echo "<br> ScanTableReferences( ) :scanne nun die Tabellenreferenzen zwischen FROM und WHERE oder anderem Clause";
+	    //  echo "\n ScanTableReferences( ) :scanne nun die Tabellenreferenzen zwischen FROM und WHERE oder anderem Clause";
 
 	    $i = 0;
 	    $references = '';
@@ -5718,7 +5790,7 @@ B'01'
                 $this->ScanTableReferences( );
 
             } else {
-    // 		    die("<br> Abbruch : ScanTableReference() : ')' erwartet ". __LINE__);
+    // 		    die("\n Abbruch : ScanTableReference() : ')' erwartet ". __LINE__);
             }
 
 
@@ -5739,34 +5811,41 @@ B'01'
 
                 $pos = $this->m_char_index;
 
-                if ( $this->SkipSpaces( ) ) $references .= ' ';
+                if ( $this->SkipSpaces( ) ) {
+                    $references .= ' ';
+                }
 
-                if ( ( $this->m_chr == '' ) ||  ( $this->m_chr == ';' ) ) {
-                $fertig = true;
-    // 			 die( "sql string ends inmidst the field list" );
+                if ( 
+                        ( $this->m_chr == '' ) ||  
+                        ( $this->m_chr == ';' ) 
+                ) {
+                    $fertig = true;
+        // 			 die( "sql string ends inmidst the field list" );
                 } elseif ( $this->m_chr == '(' ) {
 
-                $klammern++;
-                $this->GetCh( );
+                    $klammern++;
+                    $this->GetCh( );
                 } elseif ( $this->m_chr == ')' ) {
-                $klammern--;
-                $this->GetCh( );
+                    $klammern--;
+                    $this->GetCh( );
 
 
                 } elseif ( $this->m_chr == ',' ) {
 
-                $references .= ' , ';
-                $this->GetCh( );
-                if ( $this->SkipSpaces( ) ) $references .= ' ';
-                $references_new = $this->ScanEscapedTableReference( );
-                assert( $references != $references_new );
-                $references .= $references_new;
-                $this->m_a_tables[]= $references_new;
+                    $references .= ' , ';
+                    $this->GetCh( );
+                    if ( $this->SkipSpaces( ) ) {
+                        $references .= ' ';
+                    }
+                    $references_new = $this->ScanEscapedTableReference( );
+                    assert( $references != $references_new );
+                    $references .= $references_new;
+                    $this->m_a_tables[]= $references_new;
 
                 } else {
 
-                $fertig = true;
-                $this->RewindTo( $pos );
+                    $fertig = true;
+                    $this->RewindTo( $pos );
 
                 }
 
@@ -5774,7 +5853,7 @@ B'01'
 
 	    }
 
-	    //  echo "<br> ScanTableReferences( ) liefert-> $references";
+	    //  echo "\n ScanTableReferences( ) liefert-> $references";
 
 	    return $references;
 
@@ -5792,11 +5871,11 @@ B'01'
       *
       */   
       
-	private function ScanWhereCondition( ) : string {
+	private function ScanWhereCondition( ) {
 
 	    $clause = '';
 
-	    //  echo "<br> ScanWhereCondition( )";
+	    //  echo "\n ScanWhereCondition( )";
 
 	    $this->m_a_where = array( );	// die WHERE-Felder
 	    $this->m_in_where = true;
@@ -5805,7 +5884,7 @@ B'01'
 
 	    $this->m_in_where = false;
 
-	    //  echo "<br> ScanWhereCondition( ) liefert $clause";
+	    //  echo "\n ScanWhereCondition( ) liefert $clause";
 
 	    return $clause;
 
@@ -5824,11 +5903,11 @@ B'01'
       */   	
 	
 
-	private function ScanHavingCondition( ) : string {
+	private function ScanHavingCondition( ) {
 
 	    $clause = '';
 
-	    //  echo "<br> ScanHavingCondition( )";
+	    //  echo "\n ScanHavingCondition( )";
 
 	    $this->m_in_having = true;
 
@@ -5836,7 +5915,7 @@ B'01'
 
 	    $this->m_in_having = false;
 
-	    //  echo "<br> ScanHavingCondition( ) liefert $clause";
+	    //  echo "\n ScanHavingCondition( ) liefert $clause";
 
 	    return $clause;
 
@@ -5856,9 +5935,9 @@ B'01'
       *
       */   	
 
-	private function ScanGroupByCondition( array & $ary ) : string {
+	private function ScanGroupByCondition( & $ary ) {
 
-	    //  echo "<br> ScanGroupByCondition( )";
+	    //  echo "\n ScanGroupByCondition( )";
 
 	    $this->m_in_group_by = true;
 
@@ -5870,7 +5949,7 @@ B'01'
 
 	    $this->m_in_group_by = false;
 
-	    //  echo "<br> ScanGroupByCondition liefert->$list";
+	    //  echo "\n ScanGroupByCondition liefert->$list";
 
 	    return $list;
 
@@ -5891,9 +5970,9 @@ B'01'
       *
       */   		
 
-	private function ScanOrderByCondition( array & $ary ) : string {
+	private function ScanOrderByCondition( &$ary ) {
 
-	    //  echo "<br> scanne nun nach order by";
+	    //  echo "\n scanne nun nach order by";
 
 	    $ary = array( );
 
@@ -5911,260 +5990,286 @@ B'01'
  	    $identifier = $this->ScanTableOrFieldName( );
 
  	    if ( strtoupper( $identifier ) == 'ORDER' ) {
-		$this->RewindTo( $pos );
-		return '';
+            $this->RewindTo( $pos );
+            return '';
  	    }
 
-	    // echo '<br> ScanOrderByCondition: starte Scan mit id = ' . $identifier;
+	    // echo '\n ScanOrderByCondition: starte Scan mit id = ' . $identifier;
 
    	    $this->SkipSpaces( );
 
-	    while( !$fertig ) {
+	    while( ! $fertig ) {
 
-		// echo "<br> ScanOrderByCondition() mit  identifier = $identifier und NextIdentifier = " . $this->NextIdentifier();
-		$next_identifier = $this->NextIdentifier( );
+            // echo "\n ScanOrderByCondition() mit  identifier = $identifier und NextIdentifier = " . $this->NextIdentifier();
+            $next_identifier = $this->NextIdentifier( );
 
-// echo "<br> next identifier is $next_identifier";
+    // echo "\n next identifier is $next_identifier";
 
-		  if ( ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
-		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
-		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
+            if ( ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
+                \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
+                // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
 
-		    $fertig = true;
+                $fertig = true;
 
-		     // echo "<br> ScanOrderByCondition() ->RewindTo( $pos ) ";
- 		    $this->RewindTo( $pos );
+                // echo "\n ScanOrderByCondition() ->RewindTo( $pos ) ";
+                $this->RewindTo( $pos );
 
-/*
-		    for ( $i = 0; $i < strlen( $identifier ); $i++ ) {
-			$this->UnGetCh( );
-		    }
-*/
-		} elseif ( ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
-		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
-		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
-// echo "<br> cleaning up identifier with $identifier";
-		    if ( strlen( $identifier ) ) {
-			$fieldlist .= $identifier;
-			$ary[] = trim( $identifier );
-			$this->m_a_columns[] = trim( $identifier );
-		    }
-// echo "<br> field list is now '$fieldlist'";
-		    $fertig = true;
-/*
-		    for ( $i = 0; $i < strlen( $next_identifier ); $i++ ) {
-			$this->UnGetCh( );
-		    }
-*/
+    /*
+                for ( $i = 0; $i < strlen( $identifier ); $i++ ) {
+                $this->UnGetCh( );
+                }
+    */
+            } elseif ( 
+                    ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
+                    \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) 
+            ) {
+                // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
+                // echo "\n cleaning up identifier with $identifier";
+                if ( strlen( $identifier ) ) {
+                    $fieldlist .= $identifier;
+                    $ary[] = trim( $identifier );
+                    $this->m_a_columns[] = trim( $identifier );
+                }
+                // echo "\n field list is now '$fieldlist'";
+                $fertig = true;
+                
+            } elseif ( strlen( $identifier ) > 0 ) {
 
-		} elseif ( strlen( $identifier ) > 0 ) {
 
+                if ( strtoupper( $identifier ) == 'CASE' ) {
+                
+                    $this->RewindTo( $startpos );
 
-		    if ( strtoupper( $identifier ) == 'CASE' ) {
-			$this->RewindTo( $startpos );
+                } else {
+                    $act .= ' ' . $identifier;
+                }
 
-		    } else {
+                $pos = $this->m_char_index;
+    //  		    $identifier = '';
 
-// 		    $fieldlist .= $identifier;
-			$act .= ' ' . $identifier;
-		    }
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $pos = $this->m_char_index;
-//  		    $identifier = '';
+                if  ( 
+                        ( strtoupper( $identifier == 'ASC' ) ) || 
+                        ( strtoupper( $identifier == 'DESC' ) ) 
+                ) {
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                // echo "\n ASC oder DESC : $identifier";
 
-		    if  ( ( strtoupper( $identifier == 'ASC' ) ) || ( strtoupper( $identifier == 'DESC' ) ) ) {
+                $identifier = $this->ScanIdentifier( );
 
-			  // echo "<br> ASC oder DESC : $identifier";
+                $pos = $this->m_char_index;
 
-   			  $identifier = $this->ScanIdentifier( );
+                $this->m_a_field_aliases[]= $identifier;
 
-			  $pos = $this->m_char_index;
+                $fieldlist .=  ' ' . $identifier;
+                $act .=  $identifier;
+                $identifier = '';
 
-			  $this->m_a_field_aliases[]= $identifier;
 
-			  $fieldlist .=  ' ' . $identifier;
-			  $act .=  $identifier;
-			  $identifier = '';
+                if ( $this-> SkipSpaces( ) ) { 
+                        $fieldlist .= ' '; 
+                        $act .= ' '; 
+                }
+                
+                $identifier = $this->ScanIdentifier( );
 
+                } else  {
+                    // echo "\n skipping identifier '$identifier'";
 
-			  if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
- 			  $identifier = $this->ScanIdentifier( );
+                    $identifier = '';
 
-		    } else  {
-			// echo "<br> skipping identifier '$identifier'";
+                    $fieldlist .= $identifier;
 
-			$identifier = '';
+                    $identifier = $this->ScanTableOrFieldName( );
 
-			$fieldlist .= $identifier;
+                }
 
-			$identifier = $this->ScanTableOrFieldName( );
 
-		      }
+            }  elseif ( $this->FollowsOperator( ) ) {
 
+                $pos = $this->m_char_index;
 
-		}  elseif ( $this->FollowsOperator( ) ) {
+                $operator = $this->ScanOperator( );
+                $operator = ' ' . $operator . ' ';
 
-		    $pos = $this->m_char_index;
+                // echo "\n ScanOrderByCondition( ) findet Operator '$operator'";
 
-		    $operator = $this->ScanOperator( );
-		    $operator = ' ' . $operator . ' ';
+                $fieldlist .= $operator;
+                $act .=  $operator;
 
-		    // echo "<br> ScanOrderByCondition( ) findet Operator '$operator'";
+                // echo "\n fieldlist = '$fieldlist'";
 
-		    $fieldlist .= $operator;
-		    $act .=  $operator;
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    // echo "<br> fieldlist = '$fieldlist'";
+            } elseif ( $this->IsNumberStart( ) ) {
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $pos = $this->m_char_index;
+                $number = $this->ScanNumber( );
+                $fieldlist .= $number;
+                $act .=  $number;
 
-		} elseif ( $this->IsNumberStart( ) ) {
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $pos = $this->m_char_index;
-		    $number = $this->ScanNumber( );
-		    $fieldlist .= $number;
-		    $act .=  $number;
+            } elseif ( 
+                    ( $this->m_chr == '' ) || 
+                    ( $this->m_chr == ';' ) 
+            ) {
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                // echo "\n fieldlist = $fieldlist";
+                // echo "\n act = $act";
 
-		} elseif ( ( $this->m_chr == '' ) || ( $this->m_chr == ';' ) ) {
+                $fertig = true;	// Abschluss, da Ende der Abfrage erreicht
 
-		    // echo "<br> fieldlist = $fieldlist";
-		    // echo "<br> act = $act";
+    // 		    die( "\n error: sql string ends inmidst the field list" );
 
-		    $fertig = true;	// Abschluss, da Ende der Abfrage erreicht
+            } elseif ( $this->m_chr == ',' ) {
 
-// 		    die( "<br> error: sql string ends inmidst the field list" );
+                if ( strlen( trim( $act ) )  ) {
+                    $ary[] = trim( $act );
+                    $this->m_a_columns[]= trim( $act );
+                    $fieldlist .= trim( $act );
+                }
+    ;
+                $fieldlist .=  ' , ';
 
-		} elseif ( $this->m_chr == ',' ) {
+                $act = '';
+                $this->GetCh( );
+                if ( $this-> SkipSpaces( ) ) {
+                    $fieldlist .= ' ';
+                }
 
-		    if ( strlen( trim( $act ) )  ) {
-			$ary[] = trim( $act );
-			$this->m_a_columns[]= trim( $act );
-			$fieldlist .= trim( $act );
+            } elseif ( $this->m_chr == '.' ) {
 
-		    }
-;
-		    $fieldlist .=  ' , ';
+                $fieldlist .= '.';
+                $act .= '.';
 
-		    $act = '';
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) $fieldlist .= ' ';
+                $this->GetCh( );
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		} elseif ( $this->m_chr == '.' ) {
+            } elseif ( strpos( '*/-+!=', $this->m_chr ) !== false ) {
 
-		    $fieldlist .= '.';
-		    $act .= '.';
+                $fieldlist .= $this->m_chr;
+                $act .= $this->m_chr;
 
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $this->GetCh( );
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		} elseif ( strpos( '*/-+!=', $this->m_chr ) !== false ) {
 
-		    $fieldlist .= $this->m_chr;
-		    $act .= $this->m_chr;
+            } elseif ( $this->m_chr == '"' ) {
 
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $fieldlist .= '"';
+                $act .= '"';
+                $this->GetCh( );
 
+                $str = $this->ScanUntilFolgezeichen( '"' );
+                $fieldlist .= $str;
+                $act .= $str;
 
-		} elseif ( $this->m_chr == '"' ) {
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $fieldlist .= '"';
-		    $act .= '"';
-		    $this->GetCh( );
+            } elseif ( $this->m_chr == '`' ) {
 
-		    $str = $this->ScanUntilFolgezeichen( '"' );
-		    $fieldlist .= $str;
-		    $act .= $str;
+                $fieldlist .= '`';
+                $act .= '`';
+                $this->GetCh( );
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $str = $this->ScanUntilFolgezeichen( '`' );
+                $fieldlist .= $str;
+                $act .= $str;
 
-		} elseif ( $this->m_chr == '`' ) {
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $fieldlist .= '`';
-		    $act .= '`';
-		    $this->GetCh( );
+            }  elseif ( $this->m_chr == "'" ) {
 
-		    $str = $this->ScanUntilFolgezeichen( '`' );
-		    $fieldlist .= $str;
-		    $act .= $str;
+                $fieldlist .= "'";
+                $act .= "'";
+                $this->GetCh( );
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $str = $this->ScanUntilFolgezeichen( "'" );
+                $fieldlist .= $str;
+                $act .= $str;
 
-		}  elseif ( $this->m_chr == "'" ) {
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $fieldlist .= "'";
-		    $act .= "'";
-		    $this->GetCh( );
+            } elseif ( $this->m_chr == '(' ) {
 
-		    $str = $this->ScanUntilFolgezeichen( "'" );
-		    $fieldlist .= $str;
-		    $act .= $str;
+                $fieldlist .= '(';
+                $act .= '(';
+                $this->GetCh( );
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		} elseif ( $this->m_chr == '(' ) {
+                $statement = $this->ScanSubQuery( );
 
-		    $fieldlist .= '(';
-		    $act .= '(';
-		    $this->GetCh( );
+                $fieldlist .= $statement;
+                $act .= $statement;
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $this->SkipSpaces( );
 
-		    $statement = $this->ScanSubQuery( );
+            }  elseif ( $this->is_ctype_identifier_start( $this->m_chr ) ) {
 
-		    $fieldlist .= $statement;
-		    $act .= $statement;
+                $pos = $this->m_char_index;
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $this->SkipSpaces( );
+                $identifier = $this->ScanTableOrFieldName( );
+                $this->SkipSpaces( );
+            } else {
+                $fieldlist .= $identifier;
+                $act .= $identifier;
+                $identifier = $this->ScanTableOrFieldName( );
 
-		}  elseif ( $this->is_ctype_identifier_start( $this->m_chr ) ) {
-
-		    $pos = $this->m_char_index;
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
-
- 		    $identifier = $this->ScanTableOrFieldName( );
- 		    $this->SkipSpaces( );
-		} else {
-		    $fieldlist .= $identifier;
-		    $act .= $identifier;
-		    $identifier = $this->ScanTableOrFieldName( );
-
-		}
+            }
 
 	    }	// while !fertig
 
  	    if ( strlen( $act ) ) {
 
-		$ary[] = trim( $act );
- 		$this->m_a_columns[]= trim( $act );
+            $ary[] = trim( $act );
+            $this->m_a_columns[]= trim( $act );
+            
 	    }
-/*
-	    if ( ( strlen( $identifier ) ) && ( strtolower( $identifier ) != 'from' ) ) {
- 	    // if ( strlen( $identifier ) ) {
-
-		$ary[] = trim( $identifier );
- 		$this->m_a_columns[] = trim( $identifier );
- 		$fieldlist .= ( strlen( $fieldlist) ? ',' : '') . trim( $identifier );
- 		$pos = $this->m_char_index;
-	    }
-*/
+	    
  	    $act = '';
 
-//	    $this->m_field_end = $pos;
+        if ( $this->m_debug_engine > 0 ) {
+            echo "\n\n leaving ScanOrderByCondition() with ";
+            echo "\n\n ary       ="; print_r ($ary);
+            echo "\n\n fieldlist ="; print_r ($fieldlist);
+            echo "\n\n a_columns ="; print_r( $this->m_a_columns );
+        }
 
-
-	  if ( false ) {
-	      echo "\n<br> leaving ScanOrderByCondition() with ";
-	      echo "\n<br> ary       ="; print_r ($ary);
-	      echo "\n<br> fieldlist ="; print_r ($fieldlist);
-	      echo "\n<br> a_columns ="; print_r( $this->m_a_columns );
-	  }
-
-	    return $fieldlist;
+            return $fieldlist;
 
 	}	// function ScanOrderByCondition( )
 	
@@ -6182,7 +6287,7 @@ B'01'
       */   		
 
 
-	private function NextIdentifier( ) : string {
+	private function NextIdentifier( ) {
 
 	    $ret = false;
 	    $pos = $this->m_char_index;
@@ -6213,13 +6318,13 @@ B'01'
       */   		
 
 
-	private function ScanFieldList( array & $ary ) : string {
+	private function ScanFieldList( & $ary ) {
 
-	    //  echo "<br> scanne nun nach der Feldliste";
+	    //  echo "\n scanne nun nach der Feldliste";
 
 	    // liefert die Datenbankfelder in $ary als Array und $fieldlist als Zeichenkette
 
-	    // echo "<br> " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Feldliste in ScanFieldList( )";
+	    // echo "\n " . debug_backtrace()[1]['function'] . ' line=' . debug_backtrace()[0]['line'] . " scannt nach Feldliste in ScanFieldList( )";
 
 	    $ary = array( );
 
@@ -6228,8 +6333,8 @@ B'01'
 	    $pos = $this->m_char_index;
 	    $startpos = $this->m_char_index;
 
-	    // echo "<br>ScanFieldList() mit SQL = "; echo $this->GetStatementHTML( );
-	    // echo "<br>noch abzuarbeiten = "; echo $this->DumpStatementRest( );
+	    // echo "\nScanFieldList() mit SQL = "; echo $this->GetStatementHTML( );
+	    // echo "\nnoch abzuarbeiten = "; echo $this->DumpStatementRest( );
 
 //	    $this->m_field_start = $pos;
 
@@ -6246,352 +6351,431 @@ B'01'
 		return '';
  	    }
 
-	    // echo '<br> ScanFieldList: starte Scan mit id = ' . $identifier;
+	    // echo '\n ScanFieldList: starte Scan mit id = ' . $identifier;
 
    	    $this->SkipSpaces( );
 
-	    while( !$fertig ) {
-
-		// echo "<br> ScanFieldList() mit  identifier = $identifier und NextIdentifier = " . $this->NextIdentifier();
-		$next_identifier = $this->NextIdentifier( );
+	    while( ! $fertig ) {
+
+            // echo "\n ScanFieldList() mit  identifier = $identifier und NextIdentifier = " . $this->NextIdentifier();
+            $next_identifier = $this->NextIdentifier( );
+
+            if ( 
+                    ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
+                    \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) 
+            ) {
+                    // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
+
+                    $fertig = true;
+
+                    $this->RewindTo( $pos );
+
+            } elseif ( 
+                    ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
+                    \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) 
+            ) {
+            
+                // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
+                // echo "\n cleaning up identifier with $identifier";
+
+                if ( strlen( trim( $identifier ) ) ) {
+                        
+                        if ( ! \rstoetter\cSQL\cSQL::CheckedFieldName( $identifier ) ) {
+                        
+                            debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+                            $this->Dump( );
+                            die( "\n cSmartSqlStatement: error in field name: '{$identifier}'" );
+                        
+                        }
+                        $fieldlist .= $identifier;
+                        $ary[] = trim( $identifier );
+                        // if ( $identifier == 'LAND' || $identifier == 'ANZAHL') die("\nAbbruch mit Identifier = $identifier");
+                        $this->m_a_columns[] = trim( $identifier );
+                    }
+                    // echo "\n field list is now '$fieldlist'";
+                    $fertig = true;
+
+
+            } elseif ( strlen( $identifier ) > 0 ) {
+
+
+                if ( strtoupper( $identifier ) == 'CASE' ) {
+                
+                    $this->RewindTo( $startpos );
+
+                } else {
+
+                    //  $fieldlist .= $identifier;
+                    $act .= ' ' . $identifier;
+                }
+
+                $pos = $this->m_char_index;
+                //  $identifier = '';
+
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
+                
+                if  ( strtoupper( $identifier == 'AS' ) ) {
+                    // es muss ein Alias mit AS folgen
+
+                    $identifier = $this->ScanIdentifier( );	// skip 'AS'
+                    $pos = $this->m_char_index;
+                    if ( $this-> SkipSpaces( ) ) { 
+                        $fieldlist .= ' '; 
+                        $act .= ' '; 
+                    }
+                    
+                    //  			  $identifier = $this->ScanIdentifier( );	// get alias
+
+                    // TODO diese Abfrage mit in_array sollte nicht nötig sein
+                    if ( ! in_array( $identifier, $this->m_a_field_aliases ) ) {
+                        $this->m_a_field_aliases[]= $identifier;
+
+                        $fieldlist .= ' ' .  $identifier;
+                        $act .=  ' ' . $identifier;
+
+                    }
+
+                    $identifier = '';
+
+                    if ( $this-> SkipSpaces( ) ) { 
+                        $fieldlist .= ' '; 
+                        $act .= ' '; 
+                    }
 
-		  if ( ( strtoupper( trim( $identifier ) ) == 'FROM' ) ||
-		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $identifier ) ) ) ) {
-		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
+                } elseif ( 
+                        ( strlen( $identifier ) ) &&
+                        ( ! $this->StringFoundIn( strtoupper( $this->NextIdentifier( ) ), 'FROM', 'AS', ''  ) ) 
+                ) {
+                    // es muss ein Alias ohne AS folgen
+                    $identifier = $this->ScanIdentifier( );
+                    $pos = $this->m_char_index;
+                    $this->m_a_field_aliases[]= $identifier;
+                    // echo "\n addiere übriggebliebenen identifier - Alias! - $identifier";
 
-		    $fertig = true;
+                    $fieldlist .=  ' ' . $identifier;
+                    $act .=  ' ' . $identifier;
+                    $identifier = '';
 
- 		    $this->RewindTo( $pos );
-/*
-		    for ( $i = 0; $i < strlen( $identifier ); $i++ ) {
-			$this->UnGetCh( );
-		    }
-*/
-		} elseif ( ( strtoupper( trim( $next_identifier ) ) == 'FROM' ) ||
-		      \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next_identifier ) ) ) ) {
-		      // IsClauseStart() hinzugefügt, damit auch andere Methoden diese Methode verwenden können
-// echo "<br> cleaning up identifier with $identifier";
 
-		   if ( strlen( trim( $identifier ) ) ) {
-			$fieldlist .= $identifier;
-			$ary[] = trim( $identifier );
-			// if ( $identifier == 'LAND' || $identifier == 'ANZAHL') die("<br>Abbruch mit Identifier = $identifier");
-			$this->m_a_columns[] = trim( $identifier );
-		    }
-// echo "<br> field list is now '$fieldlist'";
-		    $fertig = true;
-/*
-		    for ( $i = 0; $i < strlen( $next_identifier ); $i++ ) {
-			$this->UnGetCh( );
-		    }
-*/
+                    if ( $this-> SkipSpaces( ) ) { 
+                        $fieldlist .= ' '; 
+                        $act .= ' '; 
+                    }
+                    
+                    $identifier = $this->ScanIdentifier( );
 
-		} elseif ( strlen( $identifier ) > 0 ) {
+                }  else {
+                
+                    // echo "\n skipping identifier '$identifier'";
+                    
+                    $identifier = '';
 
+                    $fieldlist .= $identifier;
+                    $this->SkipSpaces( );
+                    $identifier = $this->ScanTableOrFieldName( );
+
+                }
 
-		    if ( strtoupper( $identifier ) == 'CASE' ) {
-			$this->RewindTo( $startpos );
 
-		    } else {
+            }  elseif ( $this->m_chr == '*' ) {
+
+                $fieldlist .= '*';
+                $ary[] = '*';
+                $this->m_a_columns[]= '*';
 
-// 		    $fieldlist .= $identifier;
-			$act .= ' ' . $identifier;
-		    }
+                $act = '';
 
-		    $pos = $this->m_char_index;
-//  		    $identifier = '';
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
+                
+                $this->GetCh( );
+                
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
-		    if  ( strtoupper( $identifier == 'AS' ) ) {
-// 			  ( strtoupper( $this->NextIdentifier( ) == 'AS' ) ) {
-			  // es muss ein Alias mit AS folgen
 
- 			  $identifier = $this->ScanIdentifier( );	// skip 'AS'
-$pos = $this->m_char_index;
-			  if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
-//  			  $identifier = $this->ScanIdentifier( );	// get alias
+            } elseif ( $this->FollowsOperator( ) ) {
 
-			  // TODO diese Abfrage mit in_array sollte nicht nötig sein
- 			  if ( ! in_array( $identifier, $this->m_a_field_aliases ) ) {
-			      $this->m_a_field_aliases[]= $identifier;
+                $pos = $this->m_char_index;
 
-			      $fieldlist .= ' ' .  $identifier;
-			      $act .=  ' ' . $identifier;
+                $operator = $this->ScanOperator( );
+                $operator = ' ' . $operator . ' ';
 
-			  }
+                // echo "\n ScanFieldList( ) findet Operator '$operator'";
 
-			  $identifier = '';
+                $fieldlist .= $operator;
+                $act .=  $operator;
 
-			  if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                // echo "\n fieldlist = '$fieldlist'";
 
-		      } elseif ( ( strlen( $identifier ) ) &&
- 			  ( ! $this->StringFoundIn( strtoupper( $this->NextIdentifier( ) ), 'FROM', 'AS', ''  ) ) ) {
-			  // es muss ein Alias ohne AS folgen
-   			  $identifier = $this->ScanIdentifier( );
-$pos = $this->m_char_index;
-			  $this->m_a_field_aliases[]= $identifier;
-			  // echo "<br> addiere übriggebliebenen identifier - Alias! - $identifier";
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-			  $fieldlist .=  ' ' . $identifier;
-			  $act .=  ' ' . $identifier;
-			  $identifier = '';
+            } elseif ( $this->IsNumberStart( ) ) {
 
+                $pos = $this->m_char_index;
+                $number = $this->ScanNumber( );
+                $fieldlist .= $number;
+                $act .=  $number;
 
-			  if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
- 			  $identifier = $this->ScanIdentifier( );
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		      }  else {
-// echo "<br> skipping identifier '$identifier'";
-	      $identifier = '';
+            } elseif ( 
+                    ( $this->m_chr == '' ) || 
+                    ( $this->m_chr == ';' ) 
+                ) {
 
+                    // echo "\n fieldlist = $fieldlist";
+                    // echo "\n act = $act";
 
-			  $fieldlist .= $identifier;
-// 			  $act .= $identifier;
-// 		$this->m_a_columns[]= trim( $act );
-// 		$act = '';
-// echo '<br> act wird zu ' . $act;
-		 $this->SkipSpaces( );
-  		 $identifier = $this->ScanTableOrFieldName( );
+                    $fertig = true;	// Abschluss, da Ende der Abfrage erreicht
 
-//  	      $identifier = '';
+                    //   die( "\n error: sql string ends inmidst the field list" );
 
-		      }
+            } elseif ( $this->m_chr == ',' ) {
 
+                if ( false ){
+                    if ( trim( $act ) == 'LAND' || trim( $act ) == 'ANZAHL' ) {
+                        echo $this->GetStatementHTML( );
+                        echo $this->DumpStatementRest( );
+                        die( "\nAbbruch: act = $act" );
+                    }
+                }
 
-		}  elseif ( $this->m_chr == '*' ) {
 
-		    $fieldlist .= '*';
-		    $ary[] = '*';
-		    $this->m_a_columns[]= '*';
+                if ( strlen( trim( $act ) )  ) {
+                
+                    $act = trim( $act );
+                
+                    if ( ! \rstoetter\cSQL\cSQL::CheckedFieldName( $act ) ) {
+                        debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+                        $this->Dump( );
+                        echo "\n ary = ";
+                        var_dump( $ary );
+                        die( "\n cSmartSqlStatement::ScanFieldList() : invalid field name '$act'" );
+                    }
+                
+                    $ary[] = trim( $act );
+                    $this->m_a_columns[]= trim( $act );
+                    $fieldlist .= trim( $act );
 
-//		    $act .= '*';
-$act = '';
+                }
+                
+                $fieldlist .=  ' , ';
+                // echo "\nact = $act";
+                $act = '';
+                $ch = $this->GetCh( );
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                // echo( "\nKomma erhalten " );
+                // echo $this->DumpStatementRest( );
+                // var_dump( $ary );
+                // die( "\nAbbruch: kein Komma" );
 
 
-		} elseif ( $this->FollowsOperator( ) ) {
+                if ( $this-> SkipSpaces( ) ) {
+                    $fieldlist .= ' ';
+                }
 
-		    $pos = $this->m_char_index;
+            } elseif ( $this->m_chr == '.' ) {
 
-		    $operator = $this->ScanOperator( );
-		    $operator = ' ' . $operator . ' ';
+                $fieldlist .= '.';
+                $act .= '.';
 
-		    // echo "<br> ScanFieldList( ) findet Operator '$operator'";
+                $this->GetCh( );
+                if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
 
-		    $fieldlist .= $operator;
-		    $act .=  $operator;
+            } elseif ( strpos( '*/-+!=', $this->m_chr ) !== false ) {
 
-		    // echo "<br> fieldlist = '$fieldlist'";
+                $fieldlist .= $this->m_chr;
+                $act .= $this->m_chr;
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $this->GetCh( );
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		} elseif ( $this->IsNumberStart( ) ) {
 
-		    $pos = $this->m_char_index;
-		    $number = $this->ScanNumber( );
-		    $fieldlist .= $number;
-		    $act .=  $number;
+            } elseif ( $this->m_chr == '"' ) {
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                $fieldlist .= '"';
+                $act .= '"';
+                $this->GetCh( );
 
-		} elseif ( ( $this->m_chr == '' ) || ( $this->m_chr == ';' ) ) {
+                $str = $this->ScanUntilFolgezeichen( '"' );
+                $fieldlist .= $str;
+                $act .= $str;
 
-		    // echo "<br> fieldlist = $fieldlist";
-		    // echo "<br> act = $act";
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    $fertig = true;	// Abschluss, da Ende der Abfrage erreicht
+            }  elseif ( $this->m_chr == "'" ) {
 
-// 		    die( "<br> error: sql string ends inmidst the field list" );
+                $fieldlist .= "'";
+                $act .= "'";
+                $this->GetCh( );
 
-		} elseif ( $this->m_chr == ',' ) {
+                $str = $this->ScanUntilFolgezeichen( "'" );
+                $fieldlist .= $str;
+                $act .= $str;
 
-		if ( false ){
-		     if ( trim( $act ) == 'LAND' || trim( $act ) == 'ANZAHL' ) {
-			echo $this->GetStatementHTML( );
-			echo $this->DumpStatementRest( );
-			die( "<br>Abbruch: act = $act" );
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-		    }
-		}
+            } elseif ( $this->m_chr == '(' ) {
 
+                $weiter = true;
 
-		    if ( strlen( trim( $act ) )  ) {
-			$ary[] = trim( $act );
-			$this->m_a_columns[]= trim( $act );
-			$fieldlist .= trim( $act );
+                $fieldlist .= '(';
+                $act .= '(';
+                $this->GetCh( );
 
-		    }
+                if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
 
-;
-		    $fieldlist .=  ' , ';
-		    // echo "<br>act = $act";
-		    $act = '';
-		    $ch = $this->GetCh( );
+                $statement = $this->ScanSubQuery( );
 
-			// echo( "<br>Komma erhalten " );
-			// echo $this->DumpStatementRest( );
-			// var_dump( $ary );
-			// die( "<br>Abbruch: kein Komma" );
+                // $this->DumpStatementRest();
 
+                $fieldlist .= $statement;
+                $act .= $statement;
 
-		    if ( $this-> SkipSpaces( ) ) $fieldlist .= ' ';
+                $this->SkipSpaces( );
 
-		} elseif ( $this->m_chr == '.' ) {
+                // neu es folgt ein ',', ein 'AS' mit Alias, oder ein Alias ein FROM
+                $next = $this->NextIdentifier( );
 
-		    $fieldlist .= '.';
-		    $act .= '.';
+                if ( 
+                    ( strtoupper( $next ) != 'FROM' ) && 
+                    ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next ) ) ) ) 
+                ) {
+                // $this->DumpStatementRest( );
+                // echo( "\n <b>SQL-Statement mit SubQuery ohne ALIAS!</b>" );
+                    $weiter = false;
+                }
 
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                if ( $weiter ) {
 
-		} elseif ( strpos( '*/-+!=', $this->m_chr ) !== false ) {
+                    if ( 
+                        ( strtoupper( $next ) != 'FROM' ) && 
+                        ( strlen( $next ) ) 
+                    ) {
 
-		    $fieldlist .= $this->m_chr;
-		    $act .= $this->m_chr;
+                        if ( strtoupper( $next ) == 'AS' ) {
 
-		    $this->GetCh( );
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                            $fieldlist .= $next;
+                            $act .= ' ' . $next . ' ';
+                            $statement .= ' ' . $next . ' ' ;
 
+                            $this->ScanIdentifier( );	// skip AS
+                            $this->SkipSpaces( );
 
-		} elseif ( $this->m_chr == '"' ) {
+                        }
 
-		    $fieldlist .= '"';
-		    $act .= '"';
-		    $this->GetCh( );
+                        $alias = $this->ScanIdentifier( );
 
-		    $str = $this->ScanUntilFolgezeichen( '"' );
-		    $fieldlist .= $str;
-		    $act .= $str;
+                        $fieldlist .= $alias;
+                        $act .= ' ' . $alias . ' ';
+                        // $statement .= ' ' . $next . ' ' ;
+                        $this->SkipSpaces( );
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                        $this->m_a_field_aliases[]= $alias;
+                        // echo "\n new alias found: $alias";
 
-		}  elseif ( $this->m_chr == "'" ) {
+                    }
 
-		    $fieldlist .= "'";
-		    $act .= "'";
-		    $this->GetCh( );
+                    // echo "\n new field ( subquery ) found: $act";
 
-		    $str = $this->ScanUntilFolgezeichen( "'" );
-		    $fieldlist .= $str;
-		    $act .= $str;
+                    $this->SkipSpaces( );
+                    
+                    if ( ! \rstoetter\cSQL\cSQL::CheckedFieldName( $act ) ) {
+                        debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+                        $this->Dump( );                    
+                        die( "\n invalid field name '$act'" );
+                    }
+                    
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                    $this->m_a_columns[]= trim( $act );
+                    $ary[] = trim( $act );
 
-		} elseif ( $this->m_chr == '(' ) {
+                }
 
-		    $weiter = true;
+                $this->SkipSpaces( );
 
-		    $fieldlist .= '(';
-		    $act .= '(';
-		    $this->GetCh( );
+                $act = '';
+                $identifier = '';
+                $alias = '';
+                $next = '';
+                $statement = '';
 
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
+                if ( false ) {
+                    if ( mb_strtoupper( $this->NextIdentifier( ) ) == 'FROM' ) {
 
-		    $statement = $this->ScanSubQuery( );
+                        $this->DumpStatementRest();
+                        echo $this->GetStatementHTML();
 
-		    // $this->DumpStatementRest();
+                    }
+                }
 
-		    $fieldlist .= $statement;
-		    $act .= $statement;
+                // $this->DumpStatementRest( 'Rest nach subquery' );
 
-		    $this->SkipSpaces( );
+                // $identifier = $this->ScanTableOrFieldName( );
 
-		    // neu es folgt ein ',', ein 'AS' mit Alias, oder ein Alias ein FROM
-		    $next = $this->NextIdentifier( );
 
-		    if ( ( strtoupper( $next ) != 'FROM' ) && ( \rstoetter\libsqlphp\cMysql57_Utils::IsClauseStart( strtoupper( trim( $next ) ) ) ) ) {
-			// $this->DumpStatementRest( );
-			// echo( "<br> <b>SQL-Statement mit SubQuery ohne ALIAS!</b>" );
-			$weiter = false;
-		    }
+            }  elseif ( $this->is_ctype_identifier_start( $this->m_chr ) ) {
 
-		    if ( $weiter ) {
+                $pos = $this->m_char_index;
+                if ( $this-> SkipSpaces( ) ) { 
+                    $fieldlist .= ' '; 
+                    $act .= ' '; 
+                }
 
-			if ( ( strtoupper( $next ) != 'FROM' ) && ( strlen( $next ) ) ) {
+                $identifier = $this->ScanTableOrFieldName( );
+                $this->SkipSpaces( );
+                
+            } else {
+                $fieldlist .= $identifier;
+                $act .= $identifier;
+                $identifier = $this->ScanTableOrFieldName( );
+                // echo "\n scanne neuen identifier : $identifier";
 
-			    if ( strtoupper( $next ) == 'AS' ) {
-
-				$fieldlist .= $next;
-				$act .= ' ' . $next . ' ';
-				$statement .= ' ' . $next . ' ' ;
-
-				$this->ScanIdentifier( );	// skip AS
-				$this->SkipSpaces( );
-
-			    }
-
-			    $alias = $this->ScanIdentifier( );
-
-			    $fieldlist .= $alias;
-			    $act .= ' ' . $alias . ' ';
-			    // $statement .= ' ' . $next . ' ' ;
-			    $this->SkipSpaces( );
-
-			    $this->m_a_field_aliases[]= $alias;
-			    // echo "<br> new alias found: $alias";
-
-			}
-
-			// echo "<br> new field ( subquery ) found: $act";
-
-			$this->SkipSpaces( );
-
-			$this->m_a_columns[]= trim( $act );
-			$ary[] = trim( $act );
-
-		    }
-
-		    $this->SkipSpaces( );
-
-		    $act = '';
-		    $identifier = '';
-		    $alias = '';
-		    $next = '';
-		    $statement = '';
-
-		    if ( false ) {
-			if ( mb_strtoupper( $this->NextIdentifier( ) ) == 'FROM' ) {
-
-			    $this->DumpStatementRest();
-			    echo $this->GetStatementHTML();
-
-			}
-		    }
-
-		    // $this->DumpStatementRest( 'Rest nach subquery' );
-
-		    // $identifier = $this->ScanTableOrFieldName( );
-
-
-		}  elseif ( $this->is_ctype_identifier_start( $this->m_chr ) ) {
-
-		    $pos = $this->m_char_index;
-		    if ( $this-> SkipSpaces( ) ) { $fieldlist .= ' '; $act .= ' '; }
-
- 		    $identifier = $this->ScanTableOrFieldName( );
- 		    $this->SkipSpaces( );
-		} else {
-		    $fieldlist .= $identifier;
-		    $act .= $identifier;
-		    $identifier = $this->ScanTableOrFieldName( );
-		    // echo "<br> scanne neuen identifier : $identifier";
-
-		}
+            }
 
 	    }	// while !fertig
 
-if ( true ) {
- 	    if ( strlen( trim( $act ) ) ) {
+        if ( true ) {
+            if ( strlen( trim( $act ) ) ) {
 
-		// echo "<brScanFieldList: >addiere verwaistes act : $act";
+                if ( $this->m_debug_engine ) {
+                    echo "<brScanFieldList: >addiere verwaistes act : $act";
+                }
 
-		$ary[] = trim( $act );
- 		$this->m_a_columns[]= trim( $act );
-	    }
-}
+                if ( ! \rstoetter\cSQL\cSQL::CheckedFieldName( $act ) ) {
+                    debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+                    $this->Dump( );                
+                    die( "\n invalid field name '$act'" );
+                }
+
+                
+                $ary[] = trim( $act );                
+                $this->m_a_columns[]= trim( $act );
+            }
+        }
 
 /*
 	    if ( ( strlen( $identifier ) ) && ( strtolower( $identifier ) != 'from' ) ) {
@@ -6610,19 +6794,31 @@ if ( true ) {
 
 //	    $this->m_field_end = $pos;
 
+        foreach( $this->m_a_columns as $field_name ) {
+            if ( ! \rstoetter\cSQL\cSQL::CheckedFieldName( $field_name ) ) {
+                    debug_print_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS );
+                    $this->Dump( );            
+                die( "\n invalid field name '{$field_name}'" );
+            }
 
-	  if ( false ) {
-	      echo "<br> leaving ScanFieldList() with ";
-	      echo "<br> ary       =<br>"; var_dump ($ary);
-	      echo "<br> fieldlist =<br>"; print_r ($fieldlist);
-	      echo "<br> m_a_columns =<br>"; var_dump( $this->m_a_columns );
+        }
+
+
+	  if ( $this->m_debug_engine > 0 ) {
+	      echo "\n leaving ScanFieldList() with ";
+	      echo "\n ary       =\n"; var_dump ($ary);
+	      echo "\n fieldlist =\n"; print_r ($fieldlist);
+	      echo "\n m_a_columns =\n"; var_dump( $this->m_a_columns );
 	      $this->DumpStatementRest( );
-	      echo "<br> ---------------------- Ende ScanFieldList ";
+	      echo "\n ---------------------- Ende ScanFieldList ";
 	  }
 
 	    return $fieldlist;
 
 	}	// function ScanFieldList( )
+	
+
+	
 	
     /**
       *
@@ -6638,7 +6834,7 @@ if ( true ) {
 	
 
 
-	public function GetFieldsAsString( string & $str ) {
+	public function GetFieldsAsString( &$str ) {
 
 	    // get a copy of the field array
 
@@ -6650,49 +6846,18 @@ if ( true ) {
 	
     /**
       *
-      * The method AddField( ) adds a field to the field list and rescans the actual query string 
+      * The method GetFields( ) scans the actual query string and returns the field list which is in the buffer      
       *
       *
       *
       * Example:
       *
-      * @param string $new_field the field to add to the field list
-      *
-      */   		
-      
-    public function AddField( string $new_field ) {  
-    
-        if ( strlen( trim( $new_field ) ) ) {
-        
-            $ary = array( );
-            
-            $this->GetFields( $ary );
-            
-            $ary[] = $new_field;
-            
-            $this->SetFields( $ary );
-            
-        }
-    
-    
-    }   // function AddField( )
-      
-	
-	
-    /**
-      *
-      * The method GetFields( ) returns the field list which is in the buffer      
-      *
-      *
-      *
-      * Example:
-      *
-      * @param array $ary the items of the field list as a string array
+      * @param string $ary the items of the field list as a string array
       *
       */   		
 	
 
-	public function GetFields( array & $ary ) {
+	public function GetFields( &$ary ) {
 
 	    // get a copy of the field array
 
@@ -6700,7 +6865,7 @@ if ( true ) {
 
 	    // $ary = $this->m_a_columns;
 /*
-echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len";
+echo "\n field_start = $this->m_field_start und field len = $this->m_field_len";
 	    if ( ! $this->m_field_len ) {
 		$ary = array( );
 	    } else {
@@ -6722,7 +6887,7 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
       */   		
 	
 
-	public function SetFields( array $ary ) {
+	public function SetFields( $ary ) {
 
 	    // set the field array new - string or array is allowed as parameter
 
@@ -6730,14 +6895,13 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
 
 	    if ( is_array( $ary ) ) $ary = implode( ',', $ary );
 
-	    // echo "<br>SetFields() setting new field list = "; var_dump( explode( ',', $ary ) );
+	    // echo "\nSetFields() setting new field list = "; var_dump( explode( ',', $ary ) );
 
-	    $str_org_fields = '';
 	    $this->GetFieldsAsString( $str_org_fields );
 
 	    $query = $this->m_statement;
 
-	    // echo "<br> SetFields() mit ary ="; print_r( $ary );
+	    // echo "\n SetFields() mit ary ="; print_r( $ary );
 
 	    $new_query = substr( $query, 0, $this->m_field_start - 1 );
 
@@ -6766,14 +6930,14 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
 
     public function RemoveWhereClause( ) {
 
-        if ( $this->m_where_start ) {
-            $query = trim( substr( $this->m_statement, 0, $this->m_where_start - 1 ) );
-            $query = trim( substr( $query, 0, strlen( $query ) - strlen( 'where' ) ) );
+	if ( $this->m_where_start ) {
+	    $query = trim( substr( $this->m_statement, 0, $this->m_where_start - 1 ) );
+	    $query = trim( substr( $query, 0, strlen( $query ) - strlen( 'where' ) ) );
 
-            $this->ScanStatement( $query, 'SELECT' );
-        }
+	    $this->ScanStatement( $query, 'SELECT' );
+	}
 
-        // return $this->m_where_clause;
+	// return $this->m_where_clause;
 
     }	// function RemoveWhereClause( )
 
@@ -6788,7 +6952,7 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
       *
       */     
 
-	protected function ActChar( ) : string {
+	protected function ActChar() {
 
 	    if ( $this->m_char_index == -1 ) return '';
 
@@ -6812,9 +6976,9 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
       */   		
 	
 
-	private function ScanLimitCondition( array & $ary_limit ) : string {
+	private function ScanLimitCondition( &$ary_limit ) {
 
-	    //  echo "<br> ScanLimitCondition( )";
+	    //  echo "\n ScanLimitCondition( )";
 
 	    $ary_limit = array( );
 
@@ -6828,11 +6992,11 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
 
 	    if ( $this->m_chr == ',' ) {
 
-		$this->GetCh( );
-		$komma = ',';
-		$this->SkipSpaces( );
-		$limit2 = $this->ScanNumber( );
-		$this->SkipSpaces( );
+            $this->GetCh( );
+            $komma = ',';
+            $this->SkipSpaces( );
+            $limit2 = $this->ScanNumber( );
+            $this->SkipSpaces( );
 
 	    } else {
 
@@ -6840,7 +7004,7 @@ echo "<br> field_start = $this->m_field_start und field len = $this->m_field_len
 
 	    $limit = $limit1 . $komma . $limit2;
 
-	    //  echo "<br> ScanLimitCondition liefert->$limit1 und $limit2";
+	    //  echo "\n ScanLimitCondition liefert->$limit1 und $limit2";
 
 	    $ary_limit = array( $limit1, $limit2 );
 
